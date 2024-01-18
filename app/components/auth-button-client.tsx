@@ -4,7 +4,7 @@ import { type Session, createClientComponentClient } from '@supabase/auth-helper
 import { Github } from './icons'
 import { useRouter } from 'next/navigation'
 
-function AuthButtonClient({ session }: { session: Session }): React.JSX.Element {
+function AuthButtonClient({ session }: { session: Session | null }): React.JSX.Element {
 	const supabase = createClientComponentClient()
 	const router = useRouter()
 
