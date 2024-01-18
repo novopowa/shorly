@@ -2,11 +2,11 @@
 
 import { type Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Github } from './icons'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-function AuthButton(): React.JSX.Element {
-	const [session, setSession] = useState<Session | null>(null)
+function AuthButtonClient({ session }: { session: Session }): React.JSX.Element {
 	const supabase = createClientComponentClient()
+	const router = useRouter()
 
 	const handleSignIn = async (): Promise<void> => {
 		await supabase.auth.signInWithOAuth({
@@ -19,15 +19,8 @@ function AuthButton(): React.JSX.Element {
 
 	const handleSignOut = async (): Promise<void> => {
 		await supabase.auth.signOut()
+		router.refresh()
 	}
-
-	useEffect(() => {
-		const getSession = async (): Promise<void> => {
-			const { data } = await supabase.auth.getSession()
-			setSession(data.session)
-		}
-		getSession()
-	}, [])
 
 	return (
 		<>
@@ -37,7 +30,7 @@ function AuthButton(): React.JSX.Element {
 						handleSignIn()
 					}}
 					type='button'
-					className='text-white bg-[#24292F] focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center focus:ring-gray-500 hover:bg-[#050708]/30 me-2 mb-2'>
+					className='text-white bg-[#24292F]  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  hover:bg-[#050708]/30 me-2 mb-2'>
 					<Github />
 					Sign in with Github
 				</button>
@@ -46,7 +39,8 @@ function AuthButton(): React.JSX.Element {
 					onClick={() => {
 						handleSignOut()
 					}}
-					type='button'>
+					type='button'
+					className='text-white outline-2 outline-gray-400 bg-black  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  me-2 mb-2'>
 					Sign out from Github
 				</button>
 			)}
@@ -54,4 +48,4 @@ function AuthButton(): React.JSX.Element {
 	)
 }
 
-export default AuthButton
+export default AuthButtonClient
