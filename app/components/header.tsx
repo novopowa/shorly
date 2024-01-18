@@ -1,9 +1,10 @@
 import Menu from './menu'
+import Title from './title'
 
 function Header(): React.JSX.Element {
 	return (
-		<header>
-			<h1>Shorly</h1>
+		<header className='flex gap-2'>
+			<Title />
 			<Menu />
 		</header>
 	)
