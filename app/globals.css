@@ -13,6 +13,30 @@ body {
 	background: rgb(var(--black));
 }
 
-.black{
+.color-black{
 	color: rgb(var(--black)); 
+}
+
+.color-green{
+	color: rgb(var(--green)); 
+}
+
+.color-white{
+	color: rgb(var(--white));
+}
+
+.bgcolor-black{
+	background-color: rgb(var(--black)); 
+}
+
+.bgcolor-white{
+	background-color: rgb(var(--white)); 
+}
+
+.border-color-gray{
+	border-color: rgba(var(--black),0.1); 
+}
+
+.border-color-white{
+	border-color: rgb(var(--white)); 
 }
