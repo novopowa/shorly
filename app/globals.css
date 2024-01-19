@@ -8,6 +8,10 @@
 	--green: 3,153,88;
 }
 
+svg{
+	/* display: inline-block; */
+}
+
 body {
 	color: rgb(var(--white));
 	background: rgb(var(--black));
