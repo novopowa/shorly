@@ -1,23 +1,30 @@
 import { Roboto_Mono } from 'next/font/google'
+import { type ChangeEventHandler } from 'react'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
 function Input({
 	id,
+	value,
 	label,
 	required,
 	max,
-	type = 'text'
+	type = 'text',
+	handleOnChange
 }: {
 	id: string
+	value?: string
 	label: string
 	required?: boolean
 	max?: number
 	type?: string
+	handleOnChange?: ChangeEventHandler<HTMLInputElement>
 }): React.JSX.Element {
 	return (
 		<div className='relative z-0 w-full mb-5 pt-[0.37rem] group'>
 			<input
+				value={value}
+				onChange={handleOnChange}
 				type={type}
 				name={id}
 				id={id}
