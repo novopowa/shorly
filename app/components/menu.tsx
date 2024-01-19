@@ -1,7 +1,7 @@
 // import AuthButtonServer from './auth-button-server'
 
 import { type MENU } from '../types'
-import Button from './button'
+import ButtonLink from './ui/button-link'
 
 const menu: MENU[] = [
 	{
@@ -29,9 +29,9 @@ function Menu(): React.JSX.Element {
 				{menu.map(item => {
 					return (
 						<li key={item.name} className='[&:first-child>a]:rounded-bl-lg [&:last-child>a]:rounded-br-lg'>
-							<Button href={item.href} target={item.target}>
+							<ButtonLink href={item.href} target={item.target}>
 								{item.icon} {item.name}
-							</Button>
+							</ButtonLink>
 						</li>
 					)
 				})}
