@@ -3,4 +3,5 @@ export interface MENU {
 	name: string
 	href: string
 	target?: string
+	session?: 'user' | 'anonymous'
 }

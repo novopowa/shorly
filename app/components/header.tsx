@@ -1,11 +1,12 @@
+import { type Session } from '@supabase/auth-helpers-nextjs'
 import Menu from './menu'
 import Title from './title'
 
-function Header(): React.JSX.Element {
+function Header({ session }: { session: Session | null }): React.JSX.Element {
 	return (
 		<header className='flex gap-2'>
 			<Title />
-			<Menu />
+			<Menu session={session} />
 		</header>
 	)
 }
