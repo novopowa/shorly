@@ -32,6 +32,7 @@ function Input({
 				placeholder=' '
 				maxLength={max}
 				spellCheck={false}
+				autoComplete='off'
 				required={required !== undefined}
 			/>
 			<label

@@ -23,7 +23,7 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 			<form className='max-w-md mx-auto'>
 				<Textarea id='url' label='Paste the long URL to be shortened' required />
 				<div className='flex md:gap-1'>
-					<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.pw/</span>
+					<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.cc/</span>
 					<Input
 						id='alias'
 						label='Write or generate an Alias'

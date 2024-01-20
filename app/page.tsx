@@ -1,6 +1,5 @@
 // import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 // import { cookies } from 'next/headers'
-import Header from './components/header'
 import LinkForm from './components/link-form'
 import Wallpaper from './components/wallpaper'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
@@ -17,11 +16,8 @@ export default async function Home(): Promise<React.JSX.Element> {
 
 	return (
 		<>
-			<Header session={session} />
-			<main>
-				<LinkForm session={session} />
-				<Wallpaper />
-			</main>
+			<LinkForm session={session} />
+			<Wallpaper />
 		</>
 	)
 }
