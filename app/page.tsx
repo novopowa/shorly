@@ -12,7 +12,9 @@ export default async function Home(): Promise<React.JSX.Element> {
 
 	return (
 		<>
-			<LinkForm session={session} />
+			<div className='absolute left-10 w-full max-w-md top-1/2 transform -translate-y-1/2 bgcolor-white rounded-lg p-5 z-10'>
+				<LinkForm session={session} />
+			</div>
 			<Wallpaper />
 		</>
 	)
