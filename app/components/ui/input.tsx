@@ -31,6 +31,7 @@ function Input({
 				className={`${robotoMono.className} block tracking-tighter font-semibold py-2.5 px-0 w-full color-black bg-transparent border-0 border-b-2 border-[rgb(var(--black))] appearance-non focus:outline-none focus:ring-0 focus:border-[rgb(var(--green))] peer`}
 				placeholder=' '
 				maxLength={max}
+				spellCheck={false}
 				required={required !== undefined}
 			/>
 			<label
