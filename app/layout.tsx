@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Roboto } from 'next/font/google'
 import Header from './components/header'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { getSession } from './utils/session'
 
 const roboto = Roboto({ subsets: ['latin'], weight: '500' })
 
@@ -13,10 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }): Promise<React.JSX.Element> {
-	const supabase = createServerComponentClient({ cookies })
-	const {
-		data: { session }
-	} = await supabase.auth.getSession()
+	const session = await getSession()
 
 	return (
 		<html lang='en'>

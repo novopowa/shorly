@@ -12,12 +12,12 @@ function Menu({ session }: { session: Session | null }): React.JSX.Element {
 		{
 			name: 'Create Link',
 			action: '',
-			session: 'user'
+			permission: 'user'
 		},
 		{
 			name: 'Dashboard',
 			action: '/dashboard',
-			session: 'user'
+			permission: 'user'
 		},
 		{
 			name: 'Report a bug',
@@ -29,16 +29,18 @@ function Menu({ session }: { session: Session | null }): React.JSX.Element {
 			action: () => {
 				handleSignOut()
 			},
-			session: 'user'
+			permission: 'user'
 		},
 		{
 			name: 'Sign in',
 			action: '/auth',
-			session: 'anonymous'
+			permission: 'anonymous'
 		}
 	]
 
-	const currentMenu = menu.filter(item => (session === null ? item.session !== 'user' : item.session !== 'anonymous'))
+	const currentMenu = menu.filter(item =>
+		session === null ? item.permission !== 'user' : item.permission !== 'anonymous'
+	)
 
 	return (
 		<nav className='flex justify-end flex-1 mr-10'>

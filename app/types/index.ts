@@ -3,5 +3,5 @@ export interface MENU {
 	name: string
 	action: string | React.MouseEventHandler<HTMLButtonElement>
 	target?: string
-	session?: 'user' | 'anonymous'
+	permission?: 'user' | 'anonymous'
 }

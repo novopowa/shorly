@@ -2,7 +2,7 @@ import { type Session, createServerComponentClient } from '@supabase/auth-helper
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-const getSession = async (): Promise<Session | null> => {
+export const getSession = async (): Promise<Session | null> => {
 	const supabase = createServerComponentClient({ cookies })
 	const {
 		data: { session }
