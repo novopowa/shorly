@@ -10,6 +10,8 @@ import { useAlias } from '../hooks/useAlias'
 import { type Session } from '@supabase/auth-helpers-nextjs'
 import AnonymousHomeButtons from './anonymous-home-buttons'
 import { useValidateLink } from '../hooks/useValidateLink'
+import { type LINK } from '../types/links'
+import { useLinks } from '../hooks/useLinks'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
@@ -19,7 +21,7 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 	const [validate, errors] = useValidateLink()
 	const [signInOnSubmit, setSignInonSubmit] = useState<boolean>(false)
 	const [showSigninOptions, setShowSigninOptions] = useState(false)
-
+	const { insertLink } = useLinks()
 	const handleOnTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
 		setLongURL(e.target.value)
 	}
@@ -42,18 +44,29 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 		e.preventDefault()
 		const isValid: boolean = validate(longURL, alias)
 		if (isValid) {
+			const link: LINK = {
+				id: '',
+				url: longURL,
+				alias,
+				created_at: '',
+				description: '',
+				user_id: null
+			}
 			if (signInOnSubmit) {
-				setShowSigninOptions(true)
 				// SAVE CURRENT LINK IN LOCAL STORAGE, SUBMIT, REDIRECT HOME AND RECOVERY LINK
+				localStorage.setItem('link', JSON.stringify(link))
+				setShowSigninOptions(true)
 			} else {
+				localStorage.removeItem('link')
 				setShowSigninOptions(false)
-				// const form = e.target as unknown as HTMLFormElement
 				if (session === null) {
 					// SAVE LINK WITH ANONYMOUS USER
+					insertLink(link)
 				} else {
 					// SAVE LINK WITH CURRENT USER
+					link.user_id = session.user.id
+					insertLink(link)
 				}
-				// form.submit()
 			}
 		}
 	}
