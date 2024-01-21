@@ -11,7 +11,7 @@ import { type Session } from '@supabase/auth-helpers-nextjs'
 import AnonymousHomeButtons from './anonymous-home-buttons'
 import { useValidateLink } from '../hooks/useValidateLink'
 import { type LINK } from '../types/links'
-import { useLinks } from '../hooks/useLinks'
+import { insertLink } from '../services/links'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
@@ -21,7 +21,7 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 	const [validate, errors] = useValidateLink()
 	const [signInOnSubmit, setSignInonSubmit] = useState<boolean>(false)
 	const [showSigninOptions, setShowSigninOptions] = useState(false)
-	const { insertLink } = useLinks()
+
 	const handleOnTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
 		setLongURL(e.target.value)
 	}

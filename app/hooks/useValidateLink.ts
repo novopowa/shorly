@@ -22,7 +22,7 @@ export function useValidateLink(): [(longURL: string, alias: string) => boolean,
 		const longUrlErrors = validateLongUrl(longURL)
 		const aliasError = validateAlias(alias)
 		setErrors([...new Set([aliasError].concat(longUrlErrors))])
-		const isValid = longUrlErrors.length === 0 && aliasError.length === 0
+		const isValid = longUrlErrors.join('').length === 0 && aliasError.length === 0
 		return isValid
 	}
 
