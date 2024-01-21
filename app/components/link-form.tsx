@@ -17,6 +17,8 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 	const [longURL, setLongURL] = useState<string>('')
 	const [alias, setAlias, generateCode] = useAlias()
 	const [validate, errors] = useValidateLink()
+	const [signInOnSubmit, setSignInonSubmit] = useState<boolean>(false)
+	const [showSigninOptions, setShowSigninOptions] = useState(false)
 
 	const handleOnTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
 		setLongURL(e.target.value)
@@ -32,14 +34,27 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 		}
 	}, [longURL, alias])
 
-	const handleAnonymousHomeButtonsClick = (buttonOrigin: string): void => {}
+	const handleSigInButtonClick = (buttonOrigin: boolean): void => {
+		setSignInonSubmit(buttonOrigin)
+	}
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
 		const isValid: boolean = validate(longURL, alias)
 		if (isValid) {
-			const form = e.target as unknown as HTMLFormElement
-			form.submit()
+			if (signInOnSubmit) {
+				setShowSigninOptions(true)
+				// SAVE CURRENT LINK IN LOCAL STORAGE, SUBMIT, REDIRECT HOME AND RECOVERY LINK
+			} else {
+				setShowSigninOptions(false)
+				// const form = e.target as unknown as HTMLFormElement
+				if (session === null) {
+					// SAVE LINK WITH ANONYMOUS USER
+				} else {
+					// SAVE LINK WITH CURRENT USER
+				}
+				// form.submit()
+			}
 		}
 	}
 
@@ -80,7 +95,7 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 			</div>
 			<div>
 				{session === null ? (
-					<AnonymousHomeButtons handleClick={handleAnonymousHomeButtonsClick} />
+					<AnonymousHomeButtons handleClick={handleSigInButtonClick} showSigninOptions={showSigninOptions} />
 				) : (
 					<Button type='submit'>GET YOUR LINK</Button>
 				)}
