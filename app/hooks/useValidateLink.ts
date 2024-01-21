@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { aliasIsRepeated } from '../services/links'
 
-export function useValidateLink(): [(longURL: string, alias: string) => boolean, string[]] {
+export function useValidateLink(): [(longURL: string, alias: string) => Promise<boolean>, string[]] {
 	const [errors, setErrors] = useState<string[]>([])
 
 	const validateLongUrl = (longURL: string): string[] => {
@@ -12,17 +13,19 @@ export function useValidateLink(): [(longURL: string, alias: string) => boolean,
 		return [longUrlFormatError, longUrlLengthError]
 	}
 
-	const validateAlias = (alias: string): string => {
+	const validateAlias = async (alias: string): Promise<string[]> => {
 		const aliasRegex = /^[a-zA-Z0-9]{5}$/
-		const aliasError = aliasRegex.test(alias) ? '' : 'Alias has a wrong format'
-		return aliasError
+		const aliasFormatError = aliasRegex.test(alias) ? '' : 'Alias has a wrong format'
+		const aliasRepeatedError = alias.length < 5 ? '' : !(await aliasIsRepeated(alias)) ? '' : 'Alias already in use.'
+		return [aliasFormatError, aliasRepeatedError]
 	}
 
-	const validate = (longURL: string, alias: string): boolean => {
+	const validate = async (longURL: string, alias: string): Promise<boolean> => {
 		const longUrlErrors = validateLongUrl(longURL)
-		const aliasError = validateAlias(alias)
-		setErrors([...new Set([aliasError].concat(longUrlErrors))])
-		const isValid = longUrlErrors.join('').length === 0 && aliasError.length === 0
+		const aliasError = await validateAlias(alias)
+		const allErrors = aliasError.concat(longUrlErrors)
+		setErrors([...new Set(allErrors)])
+		const isValid = allErrors.join('').length === 0
 		return isValid
 	}
 

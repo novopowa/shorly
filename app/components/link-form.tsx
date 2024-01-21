@@ -42,33 +42,35 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
-		const isValid: boolean = validate(longURL, alias)
-		if (isValid) {
-			const link: LINK = {
-				id: '',
-				url: longURL,
-				alias,
-				created_at: '',
-				description: '',
-				user_id: null
-			}
-			if (signInOnSubmit) {
-				// SAVE CURRENT LINK IN LOCAL STORAGE, SUBMIT, REDIRECT HOME AND RECOVERY LINK
-				localStorage.setItem('link', JSON.stringify(link))
-				setShowSigninOptions(true)
-			} else {
-				localStorage.removeItem('link')
-				setShowSigninOptions(false)
-				if (session === null) {
-					// SAVE LINK WITH ANONYMOUS USER
-					insertLink(link)
+		validate(longURL, alias).then(valid => {
+			if (valid) {
+				const link: LINK = {
+					id: '',
+					url: longURL,
+					alias,
+					created_at: '',
+					description: '',
+					user_id: null
+				}
+				if (signInOnSubmit) {
+					// SAVE CURRENT LINK IN LOCAL STORAGE
+					// WHEN ENTER DASHBOARD DETECT THAT THERE IS A LINK AND AUTO CREATE IT
+					localStorage.setItem('link', JSON.stringify(link))
+					setShowSigninOptions(true)
 				} else {
-					// SAVE LINK WITH CURRENT USER
-					link.user_id = session.user.id
-					insertLink(link)
+					localStorage.removeItem('link')
+					setShowSigninOptions(false)
+					if (session === null) {
+						// SAVE LINK WITH ANONYMOUS USER
+						insertLink(link)
+					} else {
+						// SAVE LINK WITH CURRENT USER
+						link.user_id = session.user.id
+						insertLink(link)
+					}
 				}
 			}
-		}
+		})
 	}
 
 	return (

@@ -5,6 +5,14 @@ import { notFound } from 'next/navigation'
 
 const supabase = createClientComponentClient<Database>()
 
+export const aliasIsRepeated = async (alias: string): Promise<boolean> => {
+	const { data, error } = await supabase.from('links').select().eq('alias', alias)
+	if (error !== null) {
+		notFound()
+	}
+	return data?.length > 0
+}
+
 export const insertLink = async (link: LINK): Promise<void> => {
 	const { error } = await supabase.from('links').insert({
 		url: link.url,
