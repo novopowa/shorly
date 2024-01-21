@@ -5,23 +5,44 @@ import Button from './ui/button'
 import Input from './ui/input'
 import Textarea from './ui/textarea'
 import { Roboto_Mono } from 'next/font/google'
-import { type ChangeEvent } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import { useAlias } from '../hooks/useAlias'
 import { type Session } from '@supabase/auth-helpers-nextjs'
 import AnonymousHomeButtons from './anonymous-home-buttons'
+import { useValidateLink } from '../hooks/useValidateLink'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
 function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
+	const [longURL, setLongURL] = useState<string>('')
 	const [alias, setAlias, generateCode] = useAlias()
+	const [validate, errors] = useValidateLink()
+
+	const handleOnTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
+		setLongURL(e.target.value)
+	}
 
 	const handleOnInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		setAlias(e.target.value)
 	}
 
+	const handleAnonymousHomeButtonsClick = (buttonOrigin: string): void => {
+		const isValid = validate(longURL, alias)
+	}
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+		e.preventDefault()
+	}
+
 	return (
-		<form className='max-w-md mx-auto'>
-			<Textarea id='url' label='Paste the long URL to be shortened' required />
+		<form className='max-w-md mx-auto' onSubmit={handleSubmit}>
+			<Textarea
+				id='url'
+				label='Paste the long URL to be shortened'
+				handleOnChange={handleOnTextareaChange}
+				value={longURL}
+				required
+			/>
 			<div className='flex md:gap-1'>
 				<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.cc/</span>
 				<Input
@@ -30,6 +51,7 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 					max={5}
 					value={alias}
 					handleOnChange={handleOnInputChange}
+					required
 				/>
 				<div className='flex-1 mt-2'>
 					<Button
@@ -42,7 +64,18 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 					</Button>
 				</div>
 			</div>
-			<div>{session === null ? <AnonymousHomeButtons /> : <Button type='submit'>GET YOUR LINK</Button>}</div>
+			<div id='errorUrl' className='text-red-700 text-sm'>
+				{errors.map(e => (
+					<p key={e}>{e}</p>
+				))}
+			</div>
+			<div>
+				{session === null ? (
+					<AnonymousHomeButtons handleClick={handleAnonymousHomeButtonsClick} />
+				) : (
+					<Button type='submit'>GET YOUR LINK</Button>
+				)}
+			</div>
 		</form>
 	)
 }

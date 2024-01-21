@@ -2,15 +2,17 @@ import { useState } from 'react'
 import SigninOptions from './signin-options'
 import Button from './ui/button'
 
-function AnonymousHomeButtons(): React.JSX.Element {
+function AnonymousHomeButtons({ handleClick }: { handleClick: (buttonOrigin: string) => void }): React.JSX.Element {
 	const [showSigninOptions, setShowSigninOptions] = useState(false)
 
 	const handleAnonymousLink = (): void => {
 		setShowSigninOptions(false)
+		handleClick('anonymous')
 	}
 
 	const handleSignIn = (): void => {
 		setShowSigninOptions(true)
+		handleClick('signup')
 	}
 
 	return (

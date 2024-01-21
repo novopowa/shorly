@@ -1,23 +1,25 @@
 'use client'
 
-import { useState, type ReactNode } from 'react'
+import { type ChangeEventHandler } from 'react'
 import { Roboto_Mono } from 'next/font/google'
 import TextareaAutosize from 'react-textarea-autosize'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
 function Textarea({
-	children,
+	value,
 	id,
 	label,
 	required,
-	max
+	max,
+	handleOnChange
 }: {
-	children?: ReactNode
+	value?: string
 	id: string
 	label: string
 	required?: boolean
 	max?: number
+	handleOnChange?: ChangeEventHandler<HTMLTextAreaElement>
 }): React.JSX.Element {
 	return (
 		<div className='relative z-0 w-full mb-5 pt-[0.37rem] group'>
@@ -29,9 +31,9 @@ function Textarea({
 				maxRows={10}
 				maxLength={max}
 				spellCheck={false}
-				required={required !== undefined}>
-				{children}
-			</TextareaAutosize>
+				onChange={handleOnChange}
+				required={required !== undefined}
+				value={value}></TextareaAutosize>
 			<label
 				htmlFor={id}
 				className='peer-focus:font-medium absolute text-[rgb(var(--black),0.70)]  duration-300 transform -translate-y-6 scale-75 top-4 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[rgb(var(--green))] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>

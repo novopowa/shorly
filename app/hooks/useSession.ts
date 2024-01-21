@@ -1,7 +1,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/navigation'
 
-export const useSession = (): { handleSignOut: () => Promise<void> } => {
+export function useSession(): { handleSignOut: () => Promise<void> } {
 	const supabase = createClientComponentClient()
 	const router = useRouter()
 
