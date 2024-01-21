@@ -4,7 +4,7 @@ import { type LINK } from '../types/links'
 import { notFound } from 'next/navigation'
 
 interface props {
-	insertLink: (link: LINK) => Promise<LINK>
+	insertLink: (link: LINK) => Promise<void>
 	updateLink: (link: LINK) => Promise<LINK>
 	deleteLink: (link: LINK) => Promise<LINK>
 }
