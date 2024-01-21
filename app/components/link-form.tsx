@@ -5,7 +5,7 @@ import Button from './ui/button'
 import Input from './ui/input'
 import Textarea from './ui/textarea'
 import { Roboto_Mono } from 'next/font/google'
-import { useState, type ChangeEvent } from 'react'
+import { useState, type ChangeEvent, useEffect } from 'react'
 import { useAlias } from '../hooks/useAlias'
 import { type Session } from '@supabase/auth-helpers-nextjs'
 import AnonymousHomeButtons from './anonymous-home-buttons'
@@ -26,12 +26,21 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 		setAlias(e.target.value)
 	}
 
-	const handleAnonymousHomeButtonsClick = (buttonOrigin: string): void => {
-		const isValid = validate(longURL, alias)
-	}
+	useEffect(() => {
+		if (errors.length > 0) {
+			validate(longURL, alias)
+		}
+	}, [longURL, alias])
+
+	const handleAnonymousHomeButtonsClick = (buttonOrigin: string): void => {}
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
+		const isValid: boolean = validate(longURL, alias)
+		if (isValid) {
+			const form = e.target as unknown as HTMLFormElement
+			form.submit()
+		}
 	}
 
 	return (

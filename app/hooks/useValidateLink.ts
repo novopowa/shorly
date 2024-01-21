@@ -4,7 +4,8 @@ export function useValidateLink(): [(longURL: string, alias: string) => boolean,
 	const [errors, setErrors] = useState<string[]>([])
 
 	const validateLongUrl = (longURL: string): string => {
-		const longUrlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/
+		const longUrlRegex =
+			/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)/
 		const longUrlError = longUrlRegex.test(longURL) ? '' : 'Long URL has a wrong format'
 		return longUrlError
 	}
