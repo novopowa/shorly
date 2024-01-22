@@ -5,7 +5,7 @@ import { type MENU } from '../types'
 import ButtonLink from './ui/button-link'
 import { type Session } from '@supabase/auth-helpers-nextjs'
 
-function Menu({ session }: { session: Session | null }): React.JSX.Element {
+function Menu({ session }: { session: Session | null }) {
 	const { handleSignOut } = useSession()
 
 	const menu: MENU[] = [

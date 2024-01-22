@@ -12,7 +12,7 @@ function Button({
 	type?: 'button' | 'submit' | 'reset' | undefined
 	withColor?: boolean
 	enabled?: boolean
-}): React.JSX.Element {
+}) {
 	return (
 		<button
 			type={type}

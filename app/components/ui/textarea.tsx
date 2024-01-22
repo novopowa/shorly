@@ -20,7 +20,7 @@ function Textarea({
 	required?: boolean
 	max?: number
 	handleOnChange?: ChangeEventHandler<HTMLTextAreaElement>
-}): React.JSX.Element {
+}) {
 	return (
 		<div className='relative z-0 w-full mb-5 pt-[0.37rem] group'>
 			<TextareaAutosize

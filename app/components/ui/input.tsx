@@ -19,7 +19,7 @@ function Input({
 	max?: number
 	type?: string
 	handleOnChange?: ChangeEventHandler<HTMLInputElement>
-}): React.JSX.Element {
+}) {
 	return (
 		<div className='relative z-0 w-full mb-5 pt-[0.37rem] group'>
 			<input

@@ -4,7 +4,7 @@ import LinkForm from './components/link-form'
 import Wallpaper from './components/wallpaper'
 import { getSession } from './utils/session'
 
-export default async function Home(): Promise<React.JSX.Element> {
+export default async function Home() {
 	const session = await getSession()
 	/* const supabase = createServerComponentClient({ cookies })
 	const { data: links } = await supabase.from('links').select()

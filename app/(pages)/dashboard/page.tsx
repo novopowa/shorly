@@ -1,6 +1,6 @@
 import { securePage } from '@/app/utils/session'
 
-async function Dashboard(): Promise<React.JSX.Element> {
+async function Dashboard() {
 	await securePage('user')
 
 	return <>Dashboard</>

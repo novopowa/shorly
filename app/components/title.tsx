@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 const bree = Bree_Serif({ subsets: ['latin'], weight: '400' })
 
-function Title(): React.JSX.Element {
+function Title() {
 	return (
 		<Link href='/' className={`flex gap-1 items-center w-50 mt-8 bgcolor-white h-12 rounded-r-lg`}>
 			<Image src='/images/logo.webp' alt='Logo of Shorly' width={80} height={80} className='block h-20 w-20' priority />

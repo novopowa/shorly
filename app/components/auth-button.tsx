@@ -3,7 +3,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Github } from './icons'
 
-function AuthButton(): React.JSX.Element {
+function AuthButton() {
 	const supabase = createClientComponentClient()
 
 	const handleSignIn = async (): Promise<void> => {

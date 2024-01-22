@@ -7,7 +7,7 @@ function AnonymousHomeButtons({
 }: {
 	handleClick: (buttonOrigin: boolean) => void
 	showSigninOptions: boolean
-}): React.JSX.Element {
+}) {
 	const handleSignInClick = (): void => {
 		handleClick(true)
 	}

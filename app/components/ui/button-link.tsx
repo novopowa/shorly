@@ -9,7 +9,7 @@ function ButtonLink({
 	children: ReactNode
 	action: string | React.MouseEventHandler<HTMLButtonElement>
 	target: string | undefined
-}): React.JSX.Element {
+}) {
 	if (typeof action === 'string') {
 		return (
 			<Link

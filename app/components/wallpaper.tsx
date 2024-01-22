@@ -1,4 +1,4 @@
-function Wallpaper(): React.JSX.Element {
+function Wallpaper() {
 	return <></>
 }
 

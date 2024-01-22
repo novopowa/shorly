@@ -1,4 +1,4 @@
-export const Github = ({ className = 'w-4 h-4 me-2' }: { className?: string }): React.JSX.Element => (
+export const Github = ({ className = 'w-4 h-4 me-2' }: { className?: string }) => (
 	<svg className={className} aria-hidden='true' fill='currentColor' viewBox='0 0 20 20'>
 		<path
 			fillRule='evenodd'
@@ -8,7 +8,7 @@ export const Github = ({ className = 'w-4 h-4 me-2' }: { className?: string }): 
 	</svg>
 )
 
-export const Reload = ({ className = 'w-5 h-5' }: { className?: string }): React.JSX.Element => (
+export const Reload = ({ className = 'w-5 h-5' }: { className?: string }) => (
 	<svg viewBox='0 0 24 24' fill='none' className={className}>
 		<g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
 		<g id='SVGRepo_tracerCarrier' strokeLinecap='round' strokeLinejoin='round'></g>

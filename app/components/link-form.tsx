@@ -12,10 +12,11 @@ import AnonymousHomeButtons from './anonymous-home-buttons'
 import { useValidateLink } from '../hooks/useValidateLink'
 import { type LINK } from '../types/links'
 import { insertLink } from '../services/links'
+// import { revalidatePath } from 'next/cache'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
-function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
+function LinkForm({ session }: { session: Session | null }) {
 	const [longURL, setLongURL] = useState<string>('')
 	const [alias, setAlias, generateCode] = useAlias()
 	const [validate, errors] = useValidateLink()
@@ -69,6 +70,7 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 						insertLink(link)
 					}
 				}
+				// revalidatePath('/')
 			}
 		})
 	}
@@ -103,7 +105,7 @@ function LinkForm({ session }: { session: Session | null }): React.JSX.Element {
 					</Button>
 				</div>
 			</div>
-			<div id='errorUrl' className='text-red-700 text-sm'>
+			<div id='errorUrl' className='text-red-700 text-sm mb-2'>
 				{errors.map(e => (
 					<p key={e}>{e}</p>
 				))}

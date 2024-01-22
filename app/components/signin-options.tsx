@@ -1,6 +1,6 @@
 import AuthButton from './auth-button'
 
-function SigninOptions(): React.JSX.Element {
+function SigninOptions() {
 	return (
 		<div className='flex flex-col gap-2 mx-auto'>
 			<AuthButton />
