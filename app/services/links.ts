@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 const supabase = createClientComponentClient<Database>()
 
 export const aliasIsRepeated = async (alias: string): Promise<boolean> => {
-	const { data, error } = await supabase.from('links').select().eq('alias', alias)
+	const { data, error } = await supabase.from('links').select('alias').eq('alias', alias)
 	if (error !== null) {
 		notFound()
 	}
