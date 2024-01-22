@@ -13,16 +13,20 @@ export const aliasIsRepeated = async (alias: string): Promise<boolean> => {
 	return data?.length > 0
 }
 
-export const insertLink = async (link: LINK): Promise<void> => {
-	const { error } = await supabase.from('links').insert({
-		url: link.url,
-		alias: link.alias,
-		description: link.description,
-		user_id: link.user_id
-	})
+export const insertLink = async (link: LINK): Promise<LINK> => {
+	const { error, data } = await supabase
+		.from('links')
+		.insert({
+			url: link.url,
+			alias: link.alias,
+			description: link.description,
+			user_id: link.user_id
+		})
+		.select('*')
 	if (error !== null) {
 		notFound()
 	}
+	return data[0] as unknown as LINK
 }
 
 export const updateLink = async (link: LINK): Promise<LINK> => {

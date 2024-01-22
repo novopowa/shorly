@@ -1,6 +1,7 @@
 // import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 // import { cookies } from 'next/headers'
-import LinkForm from './components/link-form'
+
+import HomeBlock from './components/home/home-block'
 import Wallpaper from './components/wallpaper'
 import { getSession } from './utils/session'
 
@@ -12,9 +13,7 @@ export default async function Home() {
 
 	return (
 		<>
-			<div className='absolute left-10 w-full max-w-md top-1/2 transform -translate-y-1/2 bgcolor-white rounded-lg p-5 z-10'>
-				<LinkForm session={session} />
-			</div>
+			<HomeBlock session={session} />
 			<Wallpaper />
 		</>
 	)

@@ -16,7 +16,13 @@ import { insertLink } from '../services/links'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
-function LinkForm({ session }: { session: Session | null }) {
+function LinkForm({
+	session,
+	handleAnonymousSubmit
+}: {
+	session: Session | null
+	handleAnonymousSubmit?: (link: LINK) => void
+}) {
 	const [longURL, setLongURL] = useState<string>('')
 	const [alias, setAlias, generateCode] = useAlias()
 	const [validate, errors] = useValidateLink()
@@ -65,7 +71,10 @@ function LinkForm({ session }: { session: Session | null }) {
 					if (session === null) {
 						// SAVE LINK WITH ANONYMOUS USER
 						setLoadingAnonymousButton(true)
-						await insertLink(link)
+						const insertedLink: LINK = await insertLink(link)
+						if (handleAnonymousSubmit !== undefined) {
+							handleAnonymousSubmit(insertedLink)
+						}
 					} else {
 						// SAVE LINK WITH CURRENT USER
 						link.user_id = session.user.id
@@ -78,7 +87,7 @@ function LinkForm({ session }: { session: Session | null }) {
 	}
 
 	return (
-		<form className='max-w-md mx-auto' onSubmit={handleSubmit}>
+		<form className='w-full mx-auto' onSubmit={handleSubmit}>
 			<Textarea
 				id='url'
 				label='Paste the long URL to be shortened'
