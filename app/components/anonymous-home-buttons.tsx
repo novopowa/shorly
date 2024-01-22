@@ -3,10 +3,12 @@ import Button from './ui/button'
 
 function AnonymousHomeButtons({
 	handleClick,
-	showSigninOptions
+	showSigninOptions,
+	loadingAnonymousButton
 }: {
 	handleClick: (buttonOrigin: boolean) => void
 	showSigninOptions: boolean
+	loadingAnonymousButton: boolean
 }) {
 	const handleSignInClick = (): void => {
 		handleClick(true)
@@ -19,7 +21,7 @@ function AnonymousHomeButtons({
 		<>
 			<h2 className='uppercase text-center color-black pb-3'>Choose an option</h2>
 			<div className='flex md:gap-1'>
-				<Button type='submit' withColor={false} onclick={handleNoSignInClick}>
+				<Button type='submit' withColor={false} onclick={handleNoSignInClick} loading={loadingAnonymousButton}>
 					GET YOUR LINK
 					<br />
 					WITHOUT SIGN UP

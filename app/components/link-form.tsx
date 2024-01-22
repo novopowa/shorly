@@ -22,6 +22,7 @@ function LinkForm({ session }: { session: Session | null }) {
 	const [validate, errors] = useValidateLink()
 	const [signInOnSubmit, setSignInonSubmit] = useState<boolean>(false)
 	const [showSigninOptions, setShowSigninOptions] = useState(false)
+	const [loadingAnonymousButton, setLoadingAnonymousButton] = useState(false)
 
 	const handleOnTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
 		setLongURL(e.target.value)
@@ -43,7 +44,7 @@ function LinkForm({ session }: { session: Session | null }) {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
-		validate(longURL, alias).then(valid => {
+		validate(longURL, alias).then(async valid => {
 			if (valid) {
 				const link: LINK = {
 					id: '',
@@ -63,7 +64,8 @@ function LinkForm({ session }: { session: Session | null }) {
 					setShowSigninOptions(false)
 					if (session === null) {
 						// SAVE LINK WITH ANONYMOUS USER
-						insertLink(link)
+						setLoadingAnonymousButton(true)
+						await insertLink(link)
 					} else {
 						// SAVE LINK WITH CURRENT USER
 						link.user_id = session.user.id
@@ -112,7 +114,11 @@ function LinkForm({ session }: { session: Session | null }) {
 			</div>
 			<div>
 				{session === null ? (
-					<AnonymousHomeButtons handleClick={handleSigInButtonClick} showSigninOptions={showSigninOptions} />
+					<AnonymousHomeButtons
+						loadingAnonymousButton={loadingAnonymousButton}
+						handleClick={handleSigInButtonClick}
+						showSigninOptions={showSigninOptions}
+					/>
 				) : (
 					<Button type='submit'>GET YOUR LINK</Button>
 				)}
