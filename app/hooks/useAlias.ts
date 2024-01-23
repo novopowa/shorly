@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { rand } from '../utils'
+import { rand } from '../utils/miscellaneous'
 import { aliasIsRepeated } from '../services/links'
 
 export function useAlias(): [string, (text: string) => void, () => Promise<void>] {
