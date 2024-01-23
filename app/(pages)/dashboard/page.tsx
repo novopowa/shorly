@@ -4,6 +4,7 @@ import { getSession, securePage } from '@/app/utils/session'
 async function Dashboard() {
 	await securePage('user')
 	const session = await getSession()
+	if (session === null) return
 
 	return (
 		<>

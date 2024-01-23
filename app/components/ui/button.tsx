@@ -23,7 +23,7 @@ function Button({
 			className={`${
 				withColor
 					? 'color-white bg-[rgb(var(--green))] hover:bg-[rgba(var(--green),0.85)]'
-					: 'color-black bg-[rgb(var(--white))] hover:bg-[rgba(var(--black),0.15)] border-2 border-[rgba(var(--black),0.70)]'
+					: 'color-black bg-[rgb(var(--white))] hover:bg-[rgba(var(--black),0.05)] border-2 border-[rgba(var(--black),0.70)]'
 			}	 
 				block relative w-full outline-none font-medium rounded-lg text-sm min-w-16 p-2.5 text-center`}
 			disabled={enabled ? loading : true}>
