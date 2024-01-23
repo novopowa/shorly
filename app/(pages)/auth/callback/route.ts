@@ -21,13 +21,8 @@ export async function GET(request: NextRequest): Promise<NextResponse<unknown>> 
 	): Promise<boolean> => {
 		'use server'
 
-<<<<<<< HEAD
 		const { isValid } = await validate(url, alias)
 		if (!isValid) notFound()
-=======
-		// const { isValid } = await validate(url, alias)
-		// if (!isValid) notFound()
->>>>>>> 91add489774bdbe588c1f221cb1ecb7ef62076ad
 
 		const session = await getSession()
 		if (session === null) notFound()
