@@ -1,8 +1,8 @@
 'use client'
 
 import { type Session } from '@supabase/supabase-js'
-import { getLinksByUserId } from '../services/links'
-import { type LINK } from '../types/links'
+import { getLinksByUserId } from '../../services/links'
+import { type LINK } from '../../types/links'
 import { useEffect, useState } from 'react'
 import LinkItem from './link-item'
 import { ClipLoader } from 'react-spinners'

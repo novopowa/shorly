@@ -1,5 +1,5 @@
-import SigninOptions from './signin-options'
-import Button from './ui/button'
+import SigninOptions from '../signin-options'
+import Button from '../ui/button'
 
 function AnonymousHomeButtons({
 	handleClick,

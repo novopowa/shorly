@@ -1,9 +1,9 @@
 'use client'
 
 import { type Session } from '@supabase/auth-helpers-nextjs'
-import LinkForm from '../link-form'
+import LinkForm from '../links/link-form'
 import { useState } from 'react'
-import LinkItem from '../link-item'
+import LinkItem from '../links/link-item'
 import { type LINK } from '@/app/types/links'
 
 export default function HomeBlock({ session }: { session: Session | null }) {

@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { type LINK } from '../types/links'
-import Button from './ui/button'
+import { type LINK } from '../../types/links'
+import Button from '../ui/button'
 import { IconEdit, IconCopy } from '@tabler/icons-react'
 import { Roboto_Mono } from 'next/font/google'
 

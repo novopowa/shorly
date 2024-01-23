@@ -1,4 +1,4 @@
-import LinkList from '@/app/components/link-list'
+import LinkList from '@/app/components/links/link-list'
 import { getSession, securePage } from '@/app/utils/session'
 
 async function Dashboard() {

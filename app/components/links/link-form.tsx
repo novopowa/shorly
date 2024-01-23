@@ -1,18 +1,18 @@
 'use client'
 
-import Button from './ui/button'
-import Input from './ui/input'
-import Textarea from './ui/textarea'
-import AnonymousHomeButtons from './anonymous-home-buttons'
+import Button from '../ui/button'
+import Input from '../ui/input'
+import Textarea from '../ui/textarea'
+import AnonymousHomeButtons from '../home/anonymous-home-buttons'
 import { type Session } from '@supabase/auth-helpers-nextjs'
-import { type LINK } from '../types/links'
-import { Reload } from './icons'
+import { type LINK } from '../../types/links'
+import { Reload } from '../icons'
 import { Roboto_Mono } from 'next/font/google'
 import { useState, type ChangeEvent, useEffect } from 'react'
-import { useAlias } from '../hooks/useAlias'
-import { insertLink } from '../services/links'
+import { useAlias } from '../../hooks/useAlias'
+import { insertLink } from '../../services/links'
 import { useFormState } from 'react-dom'
-import { validate } from '../utils/validations'
+import { validate } from '../../utils/validations'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 

@@ -1,5 +1,5 @@
 import HomeBlock from './components/home/home-block'
-import Wallpaper from './components/wallpaper'
+import Wallpaper from './components/home/wallpaper'
 import { getSession } from './utils/session'
 
 export default async function Home() {

@@ -1,8 +1,8 @@
 'use client'
 
-import { useSession } from '../hooks/useSession'
-import { type MENU } from '../types/menu'
-import ButtonLink from './ui/button-link'
+import { useSession } from '../../hooks/useSession'
+import { type MENU } from '../../types/menu'
+import ButtonLink from '../ui/button-link'
 import { type Session } from '@supabase/auth-helpers-nextjs'
 
 function Menu({ session }: { session: Session | null }) {
