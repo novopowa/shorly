@@ -18,6 +18,14 @@ export const aliasIsRepeated = async (alias: string): Promise<boolean> => {
 	return data?.length > 0
 }
 
+export const getLinksByUserId = async (userId: string): Promise<LINK[]> => {
+	const { data, error } = await supabase.from('links').select('*').eq('user_id', userId)
+	if (error !== null) {
+		notFound()
+	}
+	return data as LINK[]
+}
+
 export const insertLink = async (link: any, formData: FormData): Promise<{ link: LINK | null; errors: string[] }> => {
 	const url = formData.get('url')?.toString() ?? ''
 	const alias = formData.get('alias')?.toString() ?? ''
