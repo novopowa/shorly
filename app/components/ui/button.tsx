@@ -1,4 +1,5 @@
 import { type MouseEventHandler, type ReactNode } from 'react'
+import { ClipLoader } from 'react-spinners'
 
 function Button({
 	children,
@@ -19,9 +20,24 @@ function Button({
 		<button
 			type={type}
 			onClick={onclick}
-			className={`${withColor ? 'color-white bg-[rgb(var(--green))] hover:bg-[rgba(var(--green),0.85)]' : 'color-black bg-[rgb(var(--white))] hover:bg-[rgba(var(--black),0.15)] border-2 border-[rgba(var(--black),0.70)]'} outline-none font-medium rounded-lg text-sm w-full p-2.5 text-center`}
+			className={`${
+				withColor
+					? 'color-white bg-[rgb(var(--green))] hover:bg-[rgba(var(--green),0.85)]'
+					: 'color-black bg-[rgb(var(--white))] hover:bg-[rgba(var(--black),0.15)] border-2 border-[rgba(var(--black),0.70)]'
+			}	 
+				block relative w-full outline-none font-medium rounded-lg text-sm min-w-16 p-2.5 text-center`}
 			disabled={enabled ? loading : true}>
-			{loading ? 'Loading...' : children}
+			<ClipLoader
+				loading={loading}
+				size={32}
+				color={`rgb(var(${withColor ? '--white' : '--black'}))`}
+				cssOverride={{
+					position: 'absolute',
+					top: 'calc(50% - 16px)',
+					left: 'calc(50% - 16px)'
+				}}
+			/>
+			{loading ? <span className='opacity-0'>{children}</span> : children}
 		</button>
 	)
 }

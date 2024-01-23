@@ -97,7 +97,7 @@ function LinkForm({
 					handleOnChange={handleOnInputChange}
 					required
 				/>
-				<div className='flex-1 mt-2'>
+				<div className='flex-[0_0_96px] fl mt-2'>
 					<Button
 						onclick={() => {
 							setLoadingGenerateAlias(true)
