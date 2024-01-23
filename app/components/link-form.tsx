@@ -25,11 +25,13 @@ function LinkForm({
 }) {
 	const [longURL, setLongURL] = useState<string>('')
 	const [alias, setAlias, generateCode] = useAlias()
-	const [signInOnSubmit, setSignInonSubmit] = useState<boolean>(false)
-	const [showSigninOptions, setShowSigninOptions] = useState(false)
-	const [loadingAnonymousButton, setLoadingAnonymousButton] = useState(false)
-	const [errors, setErrors] = useState<string[]>([])
+	const [signUpOnSubmit, setSignUpOnSubmit] = useState<boolean>(false)
+	const [showSignUpOptions, setShowSignUpOptions] = useState(false)
 	const [formState, formAction] = useFormState(insertLink, null)
+	const [errors, setErrors] = useState<string[]>([])
+	// Loadings
+	const [loadingAnonymousButton, setLoadingAnonymousButton] = useState(false)
+	const [loadingGenerateAlias, setLoadingGenerateAlias] = useState(false)
 
 	const handleOnTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
 		setLongURL(e.target.value)
@@ -40,7 +42,7 @@ function LinkForm({
 	}
 
 	const handleSigInButtonClick = (buttonOrigin: boolean): void => {
-		setSignInonSubmit(buttonOrigin)
+		setSignUpOnSubmit(buttonOrigin)
 	}
 
 	useEffect(() => {
@@ -58,14 +60,14 @@ function LinkForm({
 		const formErrors: string[] = formState?.errors === undefined ? [] : formState?.errors
 		setErrors(formErrors)
 		if (link !== undefined && link !== null) {
-			if (signInOnSubmit) {
+			if (signUpOnSubmit) {
 				// SAVE CURRENT LINK IN LOCAL STORAGE
 				// WHEN ENTER DASHBOARD DETECT THAT THERE IS A LINK AND AUTO CREATE IT
 				localStorage.setItem('link', JSON.stringify(link))
-				setShowSigninOptions(true)
+				setShowSignUpOptions(true)
 			} else {
 				localStorage.removeItem('link')
-				setShowSigninOptions(false)
+				setShowSignUpOptions(false)
 				if (session === null) {
 					setLoadingAnonymousButton(true)
 					if (handleAnonymousSubmit !== undefined) {
@@ -98,8 +100,12 @@ function LinkForm({
 				<div className='flex-1 mt-2'>
 					<Button
 						onclick={() => {
-							generateCode()
-						}}>
+							setLoadingGenerateAlias(true)
+							generateCode().then(() => {
+								setLoadingGenerateAlias(false)
+							})
+						}}
+						loading={loadingGenerateAlias}>
 						<span className='flex'>
 							<Reload /> Generate
 						</span>
@@ -117,7 +123,7 @@ function LinkForm({
 					<AnonymousHomeButtons
 						loadingAnonymousButton={loadingAnonymousButton}
 						handleClick={handleSigInButtonClick}
-						showSigninOptions={showSigninOptions}
+						showSigninOptions={showSignUpOptions}
 					/>
 				) : (
 					<Button type='submit'>GET YOUR LINK</Button>

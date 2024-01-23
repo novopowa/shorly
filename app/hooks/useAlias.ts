@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { rand } from '../utils'
 import { aliasIsRepeated } from '../services/links'
 
-export function useAlias(): [string, (text: string) => void, () => void] {
+export function useAlias(): [string, (text: string) => void, () => Promise<void>] {
 	const [alias, setAlias] = useState<string>('')
 
 	const generateCode = async (): Promise<void> => {
