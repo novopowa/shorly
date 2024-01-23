@@ -3,14 +3,19 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Github } from './icons'
 
-function AuthButton() {
+function AuthButton({ signUpLinkData }: { signUpLinkData?: { url: string; alias: string } }) {
 	const supabase = createClientComponentClient()
 
 	const handleSignIn = async (): Promise<void> => {
+		const linkData =
+			signUpLinkData !== undefined
+				? `?url=${encodeURIComponent(signUpLinkData.url)}&alias=${encodeURIComponent(signUpLinkData.alias)}`
+				: ''
+		const redirectUrl = `http://localhost:3000/auth/callback${linkData}`
 		await supabase.auth.signInWithOAuth({
 			provider: 'github',
 			options: {
-				redirectTo: 'http://localhost:3000/auth/callback'
+				redirectTo: redirectUrl
 			}
 		})
 	}

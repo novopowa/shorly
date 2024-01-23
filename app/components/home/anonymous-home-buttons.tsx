@@ -3,20 +3,21 @@ import Button from '../ui/button'
 
 function AnonymousHomeButtons({
 	handleClick,
-	showSigninOptions,
-	loadingAnonymousButton
+	showSignUpOptions,
+	loadingAnonymousButton,
+	signUpLinkData
 }: {
-	handleClick: (buttonOrigin: boolean) => void
-	showSigninOptions: boolean
+	handleClick: (buttonOrigin: 'anonymous' | 'signup') => void
+	showSignUpOptions: boolean
 	loadingAnonymousButton: boolean
+	signUpLinkData: { url: string; alias: string } | undefined
 }) {
 	const handleSignInClick = (): void => {
-		handleClick(true)
+		handleClick('signup')
 	}
 	const handleNoSignInClick = (): void => {
-		handleClick(false)
+		handleClick('anonymous')
 	}
-
 	return (
 		<>
 			<h2 className='uppercase text-center color-black pb-3'>Choose an option</h2>
@@ -32,8 +33,8 @@ function AnonymousHomeButtons({
 				</Button>
 			</div>
 			<div
-				className={`absolute ${showSigninOptions ? 'block -right-52' : 'hidden right-0'} -bottom-0  -translate-y-1/2 bgcolor-white rounded-r-lg p-4 animate-fade-right animate-duration-200`}>
-				<SigninOptions />
+				className={`absolute ${showSignUpOptions ? 'block -right-52' : 'hidden right-0'} -bottom-0  -translate-y-1/2 bgcolor-white rounded-r-lg p-4 animate-fade-right animate-duration-200`}>
+				<SigninOptions signUpLinkData={signUpLinkData} />
 			</div>
 		</>
 	)

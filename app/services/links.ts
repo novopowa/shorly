@@ -19,7 +19,11 @@ export const aliasIsRepeated = async (alias: string): Promise<boolean> => {
 }
 
 export const getLinksByUserId = async (userId: string): Promise<LINK[]> => {
-	const { data, error } = await supabase.from('links').select('*').eq('user_id', userId)
+	const { data, error } = await supabase
+		.from('links')
+		.select('*')
+		.eq('user_id', userId)
+		.order('created_at', { ascending: false })
 	if (error !== null) {
 		notFound()
 	}
@@ -27,11 +31,12 @@ export const getLinksByUserId = async (userId: string): Promise<LINK[]> => {
 }
 
 export const insertLink = async (link: any, formData: FormData): Promise<{ link: LINK | null; errors: string[] }> => {
-	const url = formData.get('url')?.toString() ?? ''
-	const alias = formData.get('alias')?.toString() ?? ''
-	const description = formData.get('description')?.toString() ?? null
+	const url: string = formData.get('url')?.toString() ?? ''
+	const alias: string = formData.get('alias')?.toString() ?? ''
+	const description: string | null = formData.get('description')?.toString() ?? null
+	const isSignUp: boolean = formData.get('signup')?.toString() === 'true'
 	const { isValid, errors } = await validate(url, alias)
-	if (isValid) {
+	if (isValid && !isSignUp) {
 		const session = await getSession()
 		const { error, data } = await supabase
 			.from('links')
