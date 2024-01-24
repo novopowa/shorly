@@ -16,10 +16,12 @@ const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
 function LinkForm({
 	session,
-	handleAnonymousSubmit
+	handleAnonymousSubmit,
+	modalMode
 }: {
 	session: Session | null
 	handleAnonymousSubmit?: (link: LINK) => void
+	modalMode?: string
 }) {
 	const [longURL, setLongURL] = useState<string>('')
 	const [alias, setAlias, generateCode] = useAlias()
@@ -50,31 +52,36 @@ function LinkForm({
 				value={longURL}
 				required
 			/>
-			<div className='flex md:gap-1'>
-				<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.cc/</span>
-				<Input
-					id='alias'
-					label='Write or generate an Alias'
-					max={5}
-					value={alias}
-					handleOnChange={handleOnInputChange}
-					required
-				/>
-				<div className='flex-[0_0_96px] fl mt-2'>
-					<Button
-						onclick={() => {
-							setLoadingGenerateAlias(true)
-							generateCode().then(() => {
-								setLoadingGenerateAlias(false)
-							})
-						}}
-						loading={loadingGenerateAlias}>
-						<span className='flex'>
-							<Reload /> Generate
-						</span>
-					</Button>
+
+			{modalMode === undefined || modalMode === 'insert' ? (
+				<div className='flex md:gap-1'>
+					<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.cc/</span>
+					<Input
+						id='alias'
+						label='Write or generate an Alias'
+						max={5}
+						value={alias}
+						handleOnChange={handleOnInputChange}
+						required
+					/>
+					<div className='flex-[0_0_96px] fl mt-2'>
+						<Button
+							onclick={() => {
+								setLoadingGenerateAlias(true)
+								generateCode().then(() => {
+									setLoadingGenerateAlias(false)
+								})
+							}}
+							loading={loadingGenerateAlias}>
+							<span className='flex'>
+								<Reload /> Generate
+							</span>
+						</Button>
+					</div>
 				</div>
-			</div>
+			) : (
+				<></>
+			)}
 			<div>{session !== null ? <Textarea label='Add a description' id='description' max={150} /> : <></>}</div>
 			<div id='errorUrl' className='text-red-700 text-sm mb-3'>
 				{errors.map(e => (

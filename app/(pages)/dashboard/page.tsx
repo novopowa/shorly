@@ -29,7 +29,10 @@ async function Dashboard() {
 			{newLinkUrl !== undefined && newLinkAlias !== undefined && (
 				<DeleteCookies deleteLinkDataCookies={deleteLinkDataCookies} />
 			)}
-			<h2 className='text-2xl px-10 py-4 border-b-2 border-[rgb(var(--white))]'>Dashboard</h2>
+			<div className=' flex px-10 py-4 border-b-2 border-[rgb(var(--white))]'>
+				<h2 className='text-2xl '>Dashboard</h2>
+				<div className='ml-auto'></div>
+			</div>
 			<LinkList session={session} />
 		</>
 	)

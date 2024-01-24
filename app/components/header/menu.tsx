@@ -11,7 +11,7 @@ function Menu({ session }: { session: Session | null }) {
 	const menu: MENU[] = [
 		{
 			name: 'Create Link',
-			action: '',
+			action: '/dashboard/?new=link',
 			permission: 'user'
 		},
 		{

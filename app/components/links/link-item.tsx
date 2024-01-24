@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
-export default function LinkItem({ link, notify }: { link: LINK; notify?: (text: string) => void }) {
+export default function LinkItem({ link, handleEditLink }: { link: LINK; handleEditLink?: () => void }) {
 	const linkUrl = `shorly.pw/${link.alias}`
 
 	const copyLinkUrl = () => {
@@ -43,7 +43,7 @@ export default function LinkItem({ link, notify }: { link: LINK; notify?: (text:
 					)}
 				</div>
 				<div className='w-20 ml-auto h-12'>
-					<Button>
+					<Button onclick={handleEditLink}>
 						<IconEdit /> Edit
 					</Button>
 				</div>
