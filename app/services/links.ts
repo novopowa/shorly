@@ -30,11 +30,14 @@ export const getLinksByUserId = async (userId: string): Promise<LINK[]> => {
 	return data as LINK[]
 }
 
-export const insertLink = async (link: any, formData: FormData): Promise<{ link: LINK | null; errors: string[] }> => {
+export const insertLink = async (
+	link: any,
+	formData: FormData
+): Promise<{ link: LINK | null; errors: string[]; isSignUp?: boolean }> => {
 	const url: string = formData.get('url')?.toString() ?? ''
 	const alias: string = formData.get('alias')?.toString() ?? ''
 	const description: string | null = formData.get('description')?.toString() ?? null
-	const isSignUp: boolean = formData.get('signup')?.toString() === 'true'
+	const isSignUp: boolean = formData.get('signupButton')?.toString() !== undefined
 	const { isValid, errors } = await validate(url, alias)
 	if (isValid && !isSignUp) {
 		const session = await getSession()
@@ -48,7 +51,7 @@ export const insertLink = async (link: any, formData: FormData): Promise<{ link:
 		const link: LINK = data[0] as unknown as LINK
 		return { link, errors: [] }
 	}
-	return { link: null, errors }
+	return { link: null, errors, isSignUp }
 }
 
 export const updateLink = async (link: LINK): Promise<LINK> => {

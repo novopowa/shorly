@@ -8,11 +8,9 @@ import { type Session } from '@supabase/auth-helpers-nextjs'
 import { type LINK } from '../../types/links'
 import { Reload } from '../icons'
 import { Roboto_Mono } from 'next/font/google'
-import { useState, type ChangeEvent, useEffect } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import { useAlias } from '../../hooks/useAlias'
-import { insertLink } from '../../services/links'
-import { useFormState } from 'react-dom'
-import { validate } from '../../utils/validations'
+import useLinkSubmit from '@/app/hooks/useLinkSubmit'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
@@ -25,14 +23,15 @@ function LinkForm({
 }) {
 	const [longURL, setLongURL] = useState<string>('')
 	const [alias, setAlias, generateCode] = useAlias()
-	const [signUpOnSubmit, setSignUpOnSubmit] = useState<boolean>(false)
-	const [showSignUpOptions, setShowSignUpOptions] = useState(false)
-	const [signUpLinkData, setSignUpLinkData] = useState<{ url: string; alias: string } | undefined>(undefined)
-	const [formState, formAction] = useFormState(insertLink, null)
-	const [errors, setErrors] = useState<string[]>([])
-	// Loadings
-	const [loadingAnonymousButton, setLoadingAnonymousButton] = useState(false)
 	const [loadingGenerateAlias, setLoadingGenerateAlias] = useState(false)
+	const {
+		formAction, // FORM ACTION
+		handleSubmit, // SUBMIT EVENT FOR LOADINGS
+		errors, // ERRORS ON SUBMIT
+		signUpLinkData, // URL AND ALIAS FOR SET COOKIES FOR CREATE THE LINK IF USER IS SIGNING UP
+		showSignUpOptions, // SHOW OR NOT THE DROPRIGHT MENU WITH THE SIGN UP OPTIONS
+		loadingAnonymousButton // SHOW OR NOT LOADING IN THE ANONYMOUS BUTTON
+	} = useLinkSubmit({ url: longURL, alias, session, handleAnonymousSubmit })
 
 	const handleOnTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
 		setLongURL(e.target.value)
@@ -41,55 +40,6 @@ function LinkForm({
 	const handleOnInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		setAlias(e.target.value)
 	}
-
-	const handleSigInButtonClick = (buttonOrigin: 'anonymous' | 'signup'): void => {
-		setSignUpOnSubmit(buttonOrigin === 'signup')
-	}
-
-	// WE REALLY USE ACTION FOR SUBMIT, SO THIS SUBMIT EVENT IS USED TO START THE BUTTON LOADING
-	const handleSubmit = (): void => {
-		if (!signUpOnSubmit) {
-			setLoadingAnonymousButton(true)
-		}
-	}
-
-	// VALIDATE WHILE USER WRITES
-	useEffect(() => {
-		const validateOnChange = async () => {
-			if (errors.length > 0) {
-				const { errors } = await validate(longURL, alias)
-				setErrors(errors)
-			}
-		}
-		validateOnChange()
-	}, [longURL, alias])
-
-	// IF THERE ARE ERRORS THEY ARE SHOWED AFTER THE FORM IS VALIDATED, AND MAYBE INSERTED, ON THE SERVER
-	// ALSO IF LINK HAS BEEN INSERTED AND DONE BY AN ANONYMOUS USER WE SEND IT TO PARENT TO SHOW LINK ITEM COMPONENT
-	useEffect(() => {
-		const link: LINK | null = formState?.link !== undefined ? formState?.link : null
-		const formErrors: string[] = formState?.errors === undefined ? [] : formState?.errors
-		setErrors(formErrors)
-		if (link !== undefined && link !== null) {
-			if (session === null) {
-				setLoadingAnonymousButton(true)
-				if (handleAnonymousSubmit !== undefined) {
-					handleAnonymousSubmit(link)
-				}
-			}
-		}
-	}, [formState])
-
-	// IF "CREATE LINK AND SIGN UP" BUTTON HAS BEEN PRESSED AND TEHRE IS NO ERRORS LINK IS SENDED
-	// TROUGHT THE BUTTON TO BE INCLUDED AS A PARAM ON THE SIGN UP RETURN URL AND CREATED WHEN USER FINISH
-	// THE SIGN UP
-	useEffect(() => {
-		if ((errors.length === 0 || errors[0].length === 0) && signUpOnSubmit) {
-			const linkData = { url: longURL, alias }
-			setSignUpLinkData(linkData)
-			setShowSignUpOptions(true)
-		}
-	}, [errors])
 
 	return (
 		<form className='w-full mx-auto' action={formAction} onSubmit={handleSubmit}>
@@ -132,11 +82,9 @@ function LinkForm({
 			</div>
 			<div>
 				<input type={session === null ? 'hidden' : 'text'} onChange={() => {}} name='description' value='' />
-				{session === null ? <input type='hidden' name='signup' value={signUpOnSubmit ? 'true' : 'false'} /> : ''}
 				{session === null ? (
 					<AnonymousHomeButtons
 						loadingAnonymousButton={loadingAnonymousButton}
-						handleClick={handleSigInButtonClick}
 						showSignUpOptions={showSignUpOptions}
 						signUpLinkData={signUpLinkData}
 					/>

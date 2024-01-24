@@ -3,6 +3,7 @@ import { ClipLoader } from 'react-spinners'
 
 function Button({
 	children,
+	name,
 	onclick,
 	type = 'button',
 	withColor = true,
@@ -10,6 +11,7 @@ function Button({
 	loading = false
 }: {
 	children: ReactNode
+	name?: string
 	onclick?: MouseEventHandler<HTMLButtonElement> | undefined
 	type?: 'button' | 'submit' | 'reset' | undefined
 	withColor?: boolean
@@ -19,6 +21,7 @@ function Button({
 	return (
 		<button
 			type={type}
+			name={name}
 			onClick={onclick}
 			className={`${
 				withColor
