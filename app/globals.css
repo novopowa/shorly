@@ -6,6 +6,8 @@
 	--black: 29, 31, 38;
 	--white:230, 230, 230;
 	--green: 2,137,79;
+	--toastify-text-color-light:  rgb(var(--black)) !important;
+	--toastify-color-light: rgb(var(--white)) !important;
 }
 
 svg{
@@ -44,3 +46,9 @@ body {
 .border-color-white{
 	border-color: rgb(var(--white)); 
 }
+
+.Toastify__toast-theme--colored.Toastify__toast--default{
+	color: rgb(var(--black)); 
+}
+
+

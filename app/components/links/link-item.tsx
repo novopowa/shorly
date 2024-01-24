@@ -3,23 +3,32 @@ import { type LINK } from '../../types/links'
 import Button from '../ui/button'
 import { IconEdit, IconCopy } from '@tabler/icons-react'
 import { Roboto_Mono } from 'next/font/google'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
-export default function LinkItem({ link }: { link: LINK }) {
+export default function LinkItem({ link, notify }: { link: LINK; notify?: (text: string) => void }) {
+	const linkUrl = `shorly.pw/${link.alias}`
+
+	const copyLinkUrl = () => {
+		navigator.clipboard.writeText(linkUrl)
+		toast('🔗 Link copied!')
+	}
+
 	return (
 		<div className='flex flex-col gap-2 w-full mx-auto'>
 			<div className='flex items-center'>
 				<div className='flex-1'>
 					<Link
-						href={`shorly.pw/${link.alias}`}
+						href={`https://${linkUrl}`}
 						target='_blank'
 						className={`${robotoMono.className} tracking-tighter block w-full text-[1.75rem] py-2 rounded-lg bg-transparent underline underline-offset-[3px] hover:opacity-85`}>
 						shorly.cc/<span className='color-green'>{link.alias}</span>
 					</Link>
 				</div>
 				<div className='flex-[auto_5rem]'>
-					<Button withColor={false}>
+					<Button onclick={copyLinkUrl} withColor={false}>
 						<IconCopy /> Copy
 					</Button>
 				</div>
