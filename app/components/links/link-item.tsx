@@ -27,7 +27,7 @@ export default function LinkItem({ link }: { link: LINK }) {
 			<div className='overflow-hidden whitespace-nowrap overflow-ellipsis opacity-90'>{link.url}</div>
 			<div className='flex gap-2 items-end'>
 				<div className='flex-1 overflow-hidden overflow-ellipsis line-clamp-3 h-[4.6rem]'>
-					{link.description !== null && link.description.length === 0 ? (
+					{link.description === null || link.description.length === 0 ? (
 						<span className='opacity-60'>Edit to add a description</span>
 					) : (
 						link.description
