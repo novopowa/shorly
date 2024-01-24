@@ -75,13 +75,13 @@ function LinkForm({
 					</Button>
 				</div>
 			</div>
-			<div id='errorUrl' className='text-red-700 text-sm mb-2'>
+			<div>{session !== null ? <Textarea label='Add a description' id='description' max={150} /> : <></>}</div>
+			<div id='errorUrl' className='text-red-700 text-sm mb-3'>
 				{errors.map(e => (
 					<p key={e}>{e}</p>
 				))}
 			</div>
 			<div>
-				<input type={session === null ? 'hidden' : 'text'} onChange={() => {}} name='description' value='' />
 				{session === null ? (
 					<AnonymousHomeButtons
 						loadingAnonymousButton={loadingAnonymousButton}
@@ -89,7 +89,9 @@ function LinkForm({
 						signUpLinkData={signUpLinkData}
 					/>
 				) : (
-					<Button type='submit'>GET YOUR LINK</Button>
+					<>
+						<Button type='submit'>GET YOUR LINK</Button>
+					</>
 				)}
 			</div>
 		</form>
