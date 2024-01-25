@@ -21,7 +21,7 @@ async function Dashboard() {
 		const formData = new FormData()
 		formData.append('url', newLinkUrl)
 		formData.append('alias', newLinkAlias)
-		await insertLink(null, formData)
+		await insertLink(formData)
 	}
 
 	return (

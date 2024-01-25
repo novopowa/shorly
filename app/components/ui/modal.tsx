@@ -22,7 +22,7 @@ function Modal({
 				<div className='fixed inset-0 bg-black/60' aria-hidden='true' />
 				<div className='relative w-full max-w-md max-h-full'>
 					<div className='relative rounded-lg shadow bgcolor-white'>
-						<div className='flex items-center justify-between p-4 md:p-5 border-b rounded-lg '>
+						<div className='flex items-center justify-between px-5 py-3  border-b-2 border-[rgb(var(--black))]'>
 							<h3 className='text-xl font-bold color-black'>{title}</h3>
 							<button
 								type='button'

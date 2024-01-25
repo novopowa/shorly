@@ -5,7 +5,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { type Database } from '../types/database'
 import { type LINK } from '../types/links'
 import { notFound } from 'next/navigation'
-import { validate } from '../utils/validations'
+import { validateInsert, validateUpdate } from '../utils/validations'
 import { getSession } from '../utils/session'
 
 const supabase = createServerComponentClient<Database>({ cookies })
@@ -31,14 +31,13 @@ export const getLinksByUserId = async (userId: string): Promise<LINK[]> => {
 }
 
 export const insertLink = async (
-	link: any,
 	formData: FormData
 ): Promise<{ link: LINK | null; errors: string[]; isSignUp?: boolean }> => {
 	const url: string = formData.get('url')?.toString() ?? ''
 	const alias: string = formData.get('alias')?.toString() ?? ''
 	const description: string | null = formData.get('description')?.toString() ?? null
 	const isSignUp: boolean = formData.get('signupButton')?.toString() !== undefined
-	const { isValid, errors } = await validate(url, alias)
+	const { isValid, errors } = await validateInsert(url, alias, description)
 	if (isValid && !isSignUp) {
 		const session = await getSession()
 		const { error, data } = await supabase
@@ -54,8 +53,23 @@ export const insertLink = async (
 	return { link: null, errors, isSignUp }
 }
 
-export const updateLink = async (link: LINK): Promise<LINK> => {
-	return link
+export const updateLink = async (
+	formData: FormData
+): Promise<{ link: LINK | null; errors: string[]; isSignUp?: boolean }> => {
+	const alias: string | null = formData.get('alias')?.toString() ?? null
+	if (alias === null) return { link: null, errors: [] }
+	const url: string = formData.get('url')?.toString() ?? ''
+	const description: string | null = formData.get('description')?.toString() ?? null
+	const { isValid, errors } = validateUpdate(url, description)
+	if (isValid) {
+		const { error, data } = await supabase.from('links').update({ url, description }).eq('alias', alias).select('*')
+		if (error !== null) {
+			return { link: null, errors: ['Database error'] }
+		}
+		const link: LINK = data[0] as unknown as LINK
+		return { link, errors: [] }
+	}
+	return { link: null, errors }
 }
 
 export const deleteLink = async (link: LINK): Promise<LINK> => {

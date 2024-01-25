@@ -8,19 +8,26 @@ import LinkItem from './link-item'
 import { ClipLoader } from 'react-spinners'
 import Modal from '../ui/modal'
 import LinkForm from './link-form'
-import useModalMode from '@/app/hooks/useModalMode'
+import useModalLink from '@/app/hooks/useModalLink'
 
 function LinkList({ session }: { session: Session }) {
 	const [links, setLinks] = useState<LINK[]>([])
 	const [loading, setLoading] = useState<boolean>(true)
-	const { modalMode, editModal, closeModal } = useModalMode()
+	const { modalLink, modalMode, editModal, closeModal } = useModalLink()
+
+	const getLinks = async () => {
+		setLoading(true)
+		const databaseLinks: LINK[] = await getLinksByUserId(session.user.id)
+		setLinks(databaseLinks)
+		setLoading(false)
+	}
+
+	const handleAfterSubmit = () => {
+		closeModal()
+		getLinks()
+	}
 
 	useEffect(() => {
-		const getLinks = async () => {
-			const databaseLinks: LINK[] = await getLinksByUserId(session.user.id)
-			setLinks(databaseLinks)
-			setLoading(false)
-		}
 		getLinks()
 	}, [])
 
@@ -39,15 +46,26 @@ function LinkList({ session }: { session: Session }) {
 				<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
 					{!loading &&
 						links.map(link => (
-							<div key={link.id} className=' p-6 border rounded-lg shadow bgcolor-white color-black'>
-								<LinkItem link={link} handleEditLink={editModal} />
+							<div key={link.id} className=' p-5 border rounded-lg shadow bgcolor-white color-black'>
+								<LinkItem
+									link={link}
+									handleEditLink={() => {
+										editModal(link)
+									}}
+								/>
 							</div>
 						))}
 				</div>
 			</div>
 			{modalMode !== null && (
-				<Modal title='Edit link X' modalMode={modalMode} handleCloseModal={closeModal}>
-					<LinkForm session={session} modalMode={modalMode} />
+				<Modal
+					title={`
+						${modalMode === 'insert' ? 'NEW LINK' : ''}
+						${modalMode === 'update' ? `EDIT LINK /${modalLink.alias}` : ''}
+					`}
+					modalMode={modalMode}
+					handleCloseModal={closeModal}>
+					<LinkForm session={session} modalMode={modalMode} link={modalLink} handleAfterSubmit={handleAfterSubmit} />
 				</Modal>
 			)}
 		</div>

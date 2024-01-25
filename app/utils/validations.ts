@@ -16,10 +16,29 @@ const validateAlias = async (alias: string): Promise<string[]> => {
 	return [aliasFormatError, aliasRepeatedError]
 }
 
-export const validate = async (longURL: string, alias: string): Promise<{ isValid: boolean; errors: string[] }> => {
+const validateDescription = (description: string | null): string[] => {
+	if (description === null) return []
+	const descriptionLengthError = description.length <= 150 ? '' : 'Description is too long (150 chars max)'
+	return [descriptionLengthError]
+}
+
+export const validateInsert = async (
+	longURL: string,
+	alias: string,
+	description: string | null
+): Promise<{ isValid: boolean; errors: string[] }> => {
 	const longUrlErrors = validateLongUrl(longURL)
 	const aliasError = await validateAlias(alias)
-	const allErrors = [...new Set(aliasError.concat(longUrlErrors))]
+	const descriptionError = validateDescription(description)
+	const allErrors = [...new Set(aliasError.concat(longUrlErrors, descriptionError))]
+	const isValid = allErrors.join('').length === 0
+	return { isValid, errors: allErrors }
+}
+
+export const validateUpdate = (longURL: string, description: string | null): { isValid: boolean; errors: string[] } => {
+	const longUrlErrors = validateLongUrl(longURL)
+	const descriptionError = validateDescription(description)
+	const allErrors = [...new Set(longUrlErrors.concat(descriptionError))]
 	const isValid = allErrors.join('').length === 0
 	return { isValid, errors: allErrors }
 }

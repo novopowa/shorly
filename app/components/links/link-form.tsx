@@ -8,7 +8,7 @@ import { type Session } from '@supabase/auth-helpers-nextjs'
 import { type LINK } from '../../types/links'
 import { Reload } from '../icons'
 import { Roboto_Mono } from 'next/font/google'
-import { useState, type ChangeEvent } from 'react'
+import { useState, useEffect } from 'react'
 import { useAlias } from '../../hooks/useAlias'
 import useLinkSubmit from '@/app/hooks/useLinkSubmit'
 
@@ -17,14 +17,19 @@ const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 function LinkForm({
 	session,
 	handleAnonymousSubmit,
-	modalMode
+	modalMode,
+	handleAfterSubmit,
+	link
 }: {
 	session: Session | null
 	handleAnonymousSubmit?: (link: LINK) => void
 	modalMode?: string
+	handleAfterSubmit: () => void
+	link?: LINK
 }) {
 	const [longURL, setLongURL] = useState<string>('')
 	const [alias, setAlias, generateCode] = useAlias()
+	const [description, setDescription] = useState<string | null>(null)
 	const [loadingGenerateAlias, setLoadingGenerateAlias] = useState(false)
 	const {
 		formAction, // FORM ACTION
@@ -32,27 +37,28 @@ function LinkForm({
 		errors, // ERRORS ON SUBMIT
 		signUpLinkData, // URL AND ALIAS FOR SET COOKIES FOR CREATE THE LINK IF USER IS SIGNING UP
 		showSignUpOptions, // SHOW OR NOT THE DROPRIGHT MENU WITH THE SIGN UP OPTIONS
-		loadingAnonymousButton // SHOW OR NOT LOADING IN THE ANONYMOUS BUTTON
-	} = useLinkSubmit({ url: longURL, alias, session, handleAnonymousSubmit })
+		loadingAnonymousButton, // SHOW OR NOT LOADING IN THE ANONYMOUS BUTTON
+		loadingSubmitButton // SHOW OR NOT LOADING IN THE USER BUTTONS OF INSERT AND UPDATE
+	} = useLinkSubmit({ url: longURL, alias, description, session, handleAnonymousSubmit, modalMode, handleAfterSubmit })
 
-	const handleOnTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-		setLongURL(e.target.value)
-	}
-
-	const handleOnInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-		setAlias(e.target.value)
-	}
+	useEffect(() => {
+		if (link !== undefined) {
+			setLongURL(link.url)
+			setDescription(link.description)
+		}
+	}, [])
 
 	return (
 		<form className='w-full mx-auto' action={formAction} onSubmit={handleSubmit}>
 			<Textarea
 				id='url'
 				label='Paste the long URL to be shortened'
-				handleOnChange={handleOnTextareaChange}
+				handleOnChange={e => {
+					setLongURL(e.target.value)
+				}}
 				value={longURL}
 				required
 			/>
-
 			{modalMode === undefined || modalMode === 'insert' ? (
 				<div className='flex md:gap-1'>
 					<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.cc/</span>
@@ -61,7 +67,9 @@ function LinkForm({
 						label='Write or generate an Alias'
 						max={5}
 						value={alias}
-						handleOnChange={handleOnInputChange}
+						handleOnChange={e => {
+							setAlias(e.target.value)
+						}}
 						required
 					/>
 					<div className='flex-[0_0_96px] fl mt-2'>
@@ -80,9 +88,24 @@ function LinkForm({
 					</div>
 				</div>
 			) : (
-				<></>
+				<input type='hidden' name='alias' value={link?.alias} />
 			)}
-			<div>{session !== null ? <Textarea label='Add a description' id='description' max={150} /> : <></>}</div>
+			<input type='hidden' name='isValid' value={(signUpLinkData !== undefined).toString()} />
+			<div>
+				{session !== null ? (
+					<Textarea
+						label='Add a description'
+						id='description'
+						max={150}
+						value={description ?? undefined}
+						handleOnChange={e => {
+							setDescription(e.target.value)
+						}}
+					/>
+				) : (
+					<></>
+				)}
+			</div>
 			<div id='errorUrl' className='text-red-700 text-sm mb-3'>
 				{errors.map(e => (
 					<p key={e}>{e}</p>
@@ -96,9 +119,23 @@ function LinkForm({
 						signUpLinkData={signUpLinkData}
 					/>
 				) : (
-					<>
-						<Button type='submit'>GET YOUR LINK</Button>
-					</>
+					<div>
+						{modalMode === undefined && (
+							<Button type='submit' name='insertButton' loading={loadingSubmitButton}>
+								GET YOUR LINK
+							</Button>
+						)}
+						{modalMode === 'insert' && (
+							<Button type='submit' name='insertButton' loading={loadingSubmitButton}>
+								CREATE LINK
+							</Button>
+						)}
+						{modalMode === 'update' && (
+							<Button type='submit' name='updateButton' loading={loadingSubmitButton}>
+								SAVE CHANGES
+							</Button>
+						)}
+					</div>
 				)}
 			</div>
 		</form>

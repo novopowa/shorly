@@ -8,11 +8,11 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
-export default function LinkItem({ link, handleEditLink }: { link: LINK; handleEditLink?: () => void }) {
+export default function LinkItem({ link, handleEditLink }: { link: LINK; handleEditLink?: (link: LINK) => void }) {
 	const linkUrl = `shorly.pw/${link.alias}`
 
-	const copyLinkUrl = () => {
-		navigator.clipboard.writeText(linkUrl)
+	const copyLinkUrl = async () => {
+		await navigator.clipboard.writeText(linkUrl)
 		toast('🔗 Link copied!')
 	}
 
@@ -28,7 +28,11 @@ export default function LinkItem({ link, handleEditLink }: { link: LINK; handleE
 					</Link>
 				</div>
 				<div className='flex-[auto_5rem]'>
-					<Button onclick={copyLinkUrl} withColor={false}>
+					<Button
+						onclick={() => {
+							copyLinkUrl()
+						}}
+						withColor={false}>
 						<IconCopy /> Copy
 					</Button>
 				</div>
@@ -43,7 +47,12 @@ export default function LinkItem({ link, handleEditLink }: { link: LINK; handleE
 					)}
 				</div>
 				<div className='w-20 ml-auto h-12'>
-					<Button onclick={handleEditLink}>
+					<Button
+						onclick={() => {
+							if (handleEditLink !== undefined) {
+								handleEditLink(link)
+							}
+						}}>
 						<IconEdit /> Edit
 					</Button>
 				</div>
