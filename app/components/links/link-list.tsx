@@ -13,6 +13,8 @@ import useModalLink from '@/app/hooks/useModalLink'
 function LinkList({ session }: { session: Session }) {
 	const [links, setLinks] = useState<LINK[]>([])
 	const [loading, setLoading] = useState<boolean>(true)
+	const [hightlightNew, setHightlightNew] = useState<boolean>(false)
+	const [hightlightUpdated, setHightlightUpdated] = useState<boolean>(false)
 	const { modalLink, modalMode, editModal, closeModal } = useModalLink()
 
 	const getLinks = async () => {
@@ -20,6 +22,8 @@ function LinkList({ session }: { session: Session }) {
 		const databaseLinks: LINK[] = await getLinksByUserId(session.user.id)
 		setLinks(databaseLinks)
 		setLoading(false)
+		setHightlightNew(modalMode === 'insert')
+		setHightlightUpdated(modalMode === 'update')
 	}
 
 	const handleAfterSubmit = () => {
@@ -30,6 +34,10 @@ function LinkList({ session }: { session: Session }) {
 	useEffect(() => {
 		getLinks()
 	}, [])
+
+	useEffect(() => {
+		setHightlightUpdated(false)
+	}, [modalLink])
 
 	return (
 		<div>
@@ -45,8 +53,17 @@ function LinkList({ session }: { session: Session }) {
 			<div className='mx-auto max-w-7xl p-10'>
 				<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
 					{!loading &&
-						links.map(link => (
-							<div key={link.id} className=' p-5 border rounded-lg shadow bgcolor-white color-black'>
+						links.map((link, i) => (
+							<div
+								key={link.id}
+								className={`
+								${
+									hightlightUpdated && modalLink?.alias === link.alias
+										? 'animate-pulse animate-twice animate-ease-in-out'
+										: hightlightNew && i === 0
+											? 'animate-fade animate-once animate-ease-in-out'
+											: ''
+								}  p-5 border rounded-lg shadow bgcolor-white color-black`}>
 								<LinkItem
 									link={link}
 									handleEditLink={() => {
