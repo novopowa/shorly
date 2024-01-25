@@ -8,30 +8,12 @@ import LinkItem from './link-item'
 import { ClipLoader } from 'react-spinners'
 import Modal from '../ui/modal'
 import LinkForm from './link-form'
-import { useRouter, useSearchParams } from 'next/navigation'
+import useModalMode from '@/app/hooks/useModalMode'
 
 function LinkList({ session }: { session: Session }) {
 	const [links, setLinks] = useState<LINK[]>([])
 	const [loading, setLoading] = useState<boolean>(true)
-	const [modalMode, setModalMode] = useState<'insert' | 'update' | null>(null)
-	const searchParams = useSearchParams()
-	const router = useRouter()
-
-	const handleCloseModal = () => {
-		setModalMode(null)
-		router.replace('/dashboard')
-	}
-
-	const handleEditLink = () => {
-		setModalMode('update')
-	}
-
-	useEffect(() => {
-		const setModalToInsertMode = searchParams.get('new') === 'link'
-		if (setModalToInsertMode) {
-			setModalMode('insert')
-		}
-	}, [searchParams])
+	const { modalMode, editModal, closeModal } = useModalMode()
 
 	useEffect(() => {
 		const getLinks = async () => {
@@ -58,13 +40,13 @@ function LinkList({ session }: { session: Session }) {
 					{!loading &&
 						links.map(link => (
 							<div key={link.id} className=' p-6 border rounded-lg shadow bgcolor-white color-black'>
-								<LinkItem link={link} handleEditLink={handleEditLink} />
+								<LinkItem link={link} handleEditLink={editModal} />
 							</div>
 						))}
 				</div>
 			</div>
 			{modalMode !== null && (
-				<Modal title='Edit link X' modalMode={modalMode} handleCloseModal={handleCloseModal}>
+				<Modal title='Edit link X' modalMode={modalMode} handleCloseModal={closeModal}>
 					<LinkForm session={session} modalMode={modalMode} />
 				</Modal>
 			)}
