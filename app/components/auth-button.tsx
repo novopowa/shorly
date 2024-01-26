@@ -1,9 +1,16 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Github } from './icons'
+import { type Provider } from '@supabase/supabase-js'
+import { IconBrandGithub, IconBrandGoogle } from '@tabler/icons-react'
 
-function AuthButton({ signUpLinkData }: { signUpLinkData?: { url: string; alias: string } }) {
+function AuthButton({
+	signUpLinkData,
+	provider
+}: {
+	signUpLinkData?: { url: string; alias: string }
+	provider: Provider
+}) {
 	const supabase = createClientComponentClient()
 
 	const handleSignIn = async (): Promise<void> => {
@@ -13,9 +20,13 @@ function AuthButton({ signUpLinkData }: { signUpLinkData?: { url: string; alias:
 				: ''
 		const redirectUrl = `http://localhost:3000/auth/callback${linkData}`
 		await supabase.auth.signInWithOAuth({
-			provider: 'github',
+			provider,
 			options: {
-				redirectTo: redirectUrl
+				redirectTo: redirectUrl,
+				queryParams: {
+					access_type: 'offline',
+					prompt: 'consent'
+				}
 			}
 		})
 	}
@@ -26,9 +37,20 @@ function AuthButton({ signUpLinkData }: { signUpLinkData?: { url: string; alias:
 				handleSignIn()
 			}}
 			type='button'
-			className='text-white bg-[#24292F]  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  hover:bg-[#050708]/80'>
-			<Github />
-			Sign in with Github
+			className={`
+				${provider === 'google' ? 'bg-[#4285F4] hover:bg-[#4285F4]/90' : ''}
+				${provider === 'github' ? 'bg-[#24292F] hover:bg-[#050708]/80' : ''}
+			 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center [&>svg]:h-4`}>
+			{provider === 'google' && (
+				<>
+					<IconBrandGoogle /> Sign in with Google
+				</>
+			)}
+			{provider === 'github' && (
+				<>
+					<IconBrandGithub /> Sign in with Github
+				</>
+			)}
 		</button>
 	)
 }
