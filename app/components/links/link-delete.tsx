@@ -5,6 +5,7 @@ import Button from '../ui/button'
 import { deleteLink } from '../../services/links'
 import { useFormState } from 'react-dom'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 function LinkDelete({ handleAfterSubmit, link }: { handleAfterSubmit: () => void; link?: LINK }) {
 	const [errors, formAction] = useFormState(deleteLink, null)
@@ -18,6 +19,7 @@ function LinkDelete({ handleAfterSubmit, link }: { handleAfterSubmit: () => void
 		const formErrorsFiltered: string[] | undefined = errors?.filter((e: string) => e !== '')
 
 		if (formErrorsFiltered !== undefined && formErrorsFiltered.length === 0) {
+			toast('🔗 Link deleted!')
 			handleAfterSubmit()
 		} else {
 			setLoadingSubmitButton(false)
