@@ -60,5 +60,8 @@ body {
 .Toastify__toast-theme--colored.Toastify__toast--default{
 	color: rgb(var(--black)); 
 }
+.Toastify__close-button{
+	display: none;
+}
 
 

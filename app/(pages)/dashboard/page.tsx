@@ -30,7 +30,7 @@ async function Dashboard() {
 				<DeleteCookies deleteLinkDataCookies={deleteLinkDataCookies} />
 			)}
 			<div className=' flex px-10 py-4 border-b-2 border-[rgb(var(--white))]'>
-				<h2 className='text-2xl '>Dashboard</h2>
+				<h2 className='flex text-2xl items-center'>Dashboard</h2>
 				<div className='ml-auto'></div>
 			</div>
 			<LinkList session={session} />
