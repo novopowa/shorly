@@ -2,11 +2,12 @@ function Search({ handleOnFilterChange }: { handleOnFilterChange: (e: React.Chan
 	return (
 		<div className='flex justify-end pr-10 -mt-14 '>
 			<input
-				className='text-sm min-w-60 bgcolor-white color-black px-3 py-2 rounded-lg outline-none placeholder-[rgba(var(--black),0.7)]'
+				className='text-sm min-w-52 bgcolor-black color-white border-b border-[rgb(var(--white))] py-2 outline-none placeholder-[rgba(var(--white),0.7)]'
 				type='text'
 				id='search'
 				placeholder='Filter by URL, Alias or Description'
 				onChange={handleOnFilterChange}
+				autoCorrect='false'
 			/>
 		</div>
 	)
