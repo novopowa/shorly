@@ -14,7 +14,7 @@ function Button({
 	name?: string
 	onclick?: MouseEventHandler<HTMLButtonElement> | undefined
 	type?: 'button' | 'submit' | 'reset' | undefined
-	withColor?: boolean
+	withColor?: boolean | string
 	enabled?: boolean
 	loading?: boolean
 }) {
@@ -24,16 +24,17 @@ function Button({
 			name={name}
 			onClick={onclick}
 			className={`${
-				withColor
-					? 'color-white bg-[rgb(var(--green))] hover:bg-[rgba(var(--green),0.85)]'
-					: 'color-black bg-[rgb(var(--white))] hover:bg-[rgba(var(--black),0.05)] border-2 border-[rgba(var(--black),0.70)]'
-			}	 
-				block relative w-full outline-none font-medium rounded-lg text-sm min-w-16 p-2.5 text-center`}
+				typeof withColor === 'string'
+					? `${withColor} hover:opacity-85 py-2.5 text-left`
+					: withColor
+						? 'color-white bg-[rgb(var(--green))] hover:bg-[rgba(var(--green),0.85)] p-2.5 text-center'
+						: 'color-black bg-[rgb(var(--white))] hover:bg-[rgba(var(--black),0.05)] border-2 border-[rgba(var(--black),0.70)] p-2.5 text-center'
+			} block relative w-full outline-none font-medium rounded-lg text-sm min-w-16 [&>svg]:-mt-1`}
 			disabled={enabled ? loading : true}>
 			<ClipLoader
 				loading={loading}
 				size={32}
-				color={`rgb(var(${withColor ? '--white' : '--black'}))`}
+				color={`rgb(var(${typeof withColor === 'string' ? `${withColor}` : withColor ? '--white' : '--black'}))`}
 				cssOverride={{
 					position: 'absolute',
 					top: 'calc(50% - 16px)',

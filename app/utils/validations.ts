@@ -9,9 +9,14 @@ const validateLongUrl = (longURL: string): string[] => {
 	return [longUrlFormatError, longUrlLengthError]
 }
 
-const validateAlias = async (alias: string): Promise<string[]> => {
+const validateAliasFormat = (alias: string): string => {
 	const aliasRegex = /^[a-zA-Z0-9]{5}$/
 	const aliasFormatError = aliasRegex.test(alias) ? '' : 'Alias has a wrong format'
+	return aliasFormatError
+}
+
+const validateAlias = async (alias: string): Promise<string[]> => {
+	const aliasFormatError = validateAliasFormat(alias)
 	const aliasRepeatedError = alias.length < 5 ? '' : !(await aliasIsRepeated(alias)) ? '' : 'Alias already in use.'
 	return [aliasFormatError, aliasRepeatedError]
 }
@@ -41,4 +46,13 @@ export const validateUpdate = (longURL: string, description: string | null): { i
 	const allErrors = [...new Set(longUrlErrors.concat(descriptionError))]
 	const isValid = allErrors.join('').length === 0
 	return { isValid, errors: allErrors }
+}
+
+export const validateDelete = (alias: string, aliasOriginal: string): { isValid: boolean; errors: string[] } => {
+	const aliasFormatError = validateAliasFormat(alias)
+	const aliasDiferenceError =
+		alias === aliasOriginal ? '' : 'The alias you entered does not match the alias of this link'
+	const errors = [...new Set([aliasFormatError, aliasDiferenceError])]
+	const isValid = errors.join('').length === 0
+	return { isValid, errors }
 }

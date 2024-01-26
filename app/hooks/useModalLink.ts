@@ -4,8 +4,9 @@ import { type LINK } from '../types/links'
 
 interface props {
 	modalLink: LINK
-	modalMode: null | 'insert' | 'update'
+	modalMode: null | 'insert' | 'update' | 'delete'
 	editModal: (link: LINK) => void
+	deleteModal: (link: LINK) => void
 	closeModal: () => void
 }
 
@@ -25,6 +26,11 @@ function useModalLink(): props {
 		setModalMode('update')
 	}
 
+	const deleteModal = (link: LINK) => {
+		setEditLink(link)
+		setModalMode('delete')
+	}
+
 	useEffect(() => {
 		const setModalToInsertMode = searchParams.get('new') === 'link'
 		if (setModalToInsertMode) {
@@ -33,7 +39,7 @@ function useModalLink(): props {
 		}
 	}, [searchParams])
 
-	return { modalLink: editLink, modalMode, editModal, closeModal }
+	return { modalLink: editLink, modalMode, editModal, deleteModal, closeModal }
 }
 
 export default useModalLink

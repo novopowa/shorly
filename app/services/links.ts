@@ -5,7 +5,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { type Database } from '../types/database'
 import { type LINK } from '../types/links'
 import { notFound } from 'next/navigation'
-import { validateInsert, validateUpdate } from '../utils/validations'
+import { validateInsert, validateUpdate, validateDelete } from '../utils/validations'
 import { getSession } from '../utils/session'
 
 const supabase = createServerComponentClient<Database>({ cookies })
@@ -72,6 +72,15 @@ export const updateLink = async (
 	return { link: null, errors }
 }
 
-export const deleteLink = async (link: LINK): Promise<LINK> => {
-	return link
+export const deleteLink = async (state: string[] | null, formData: FormData): Promise<string[]> => {
+	const alias: string = formData.get('alias')?.toString() ?? ''
+	const originalAlias: string = formData.get('original_alias')?.toString() ?? ''
+	const { isValid, errors } = validateDelete(alias, originalAlias)
+	if (isValid) {
+		const { error } = await supabase.from('links').delete().eq('alias', alias)
+		if (error !== null) {
+			return ['Database error']
+		}
+	}
+	return errors
 }

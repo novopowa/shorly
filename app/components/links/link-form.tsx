@@ -106,7 +106,7 @@ function LinkForm({
 					<></>
 				)}
 			</div>
-			<div id='errorUrl' className='text-red-700 text-sm mb-3'>
+			<div id='errorUrl' className='color-error text-sm mb-3'>
 				{errors.map(e => (
 					<p key={e}>{e}</p>
 				))}

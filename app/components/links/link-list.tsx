@@ -9,13 +9,14 @@ import { ClipLoader } from 'react-spinners'
 import Modal from '../ui/modal'
 import LinkForm from './link-form'
 import useModalLink from '@/app/hooks/useModalLink'
+import LinkDelete from './link-delete'
 
 function LinkList({ session }: { session: Session }) {
 	const [links, setLinks] = useState<LINK[]>([])
 	const [loading, setLoading] = useState<boolean>(true)
 	const [hightlightNew, setHightlightNew] = useState<boolean>(false)
 	const [hightlightUpdated, setHightlightUpdated] = useState<boolean>(false)
-	const { modalLink, modalMode, editModal, closeModal } = useModalLink()
+	const { modalLink, modalMode, editModal, deleteModal, closeModal } = useModalLink()
 
 	const getLinks = async () => {
 		setLoading(true)
@@ -69,17 +70,26 @@ function LinkList({ session }: { session: Session }) {
 									handleEditLink={() => {
 										editModal(link)
 									}}
+									handleDeleteLink={() => {
+										deleteModal(link)
+									}}
 								/>
 							</div>
 						))}
 				</div>
 			</div>
-			{modalMode !== null && (
+			{modalMode === null ? (
+				''
+			) : modalMode === 'delete' ? (
+				<Modal title={`DELETE LINK /${modalLink.alias}`} modalMode={modalMode} handleCloseModal={closeModal}>
+					<LinkDelete link={modalLink} handleAfterSubmit={handleAfterSubmit} />
+				</Modal>
+			) : (
 				<Modal
 					title={`
-						${modalMode === 'insert' ? 'NEW LINK' : ''}
-						${modalMode === 'update' ? `EDIT LINK /${modalLink.alias}` : ''}
-					`}
+					${modalMode === 'insert' ? 'NEW LINK' : ''}
+					${modalMode === 'update' ? `EDIT LINK /${modalLink.alias}` : ''}
+				`}
 					modalMode={modalMode}
 					handleCloseModal={closeModal}>
 					<LinkForm session={session} modalMode={modalMode} link={modalLink} handleAfterSubmit={handleAfterSubmit} />

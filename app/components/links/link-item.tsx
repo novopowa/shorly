@@ -1,14 +1,22 @@
 import Link from 'next/link'
 import { type LINK } from '../../types/links'
 import Button from '../ui/button'
-import { IconEdit, IconCopy } from '@tabler/icons-react'
+import { IconEdit, IconCopy, IconTrash } from '@tabler/icons-react'
 import { Roboto_Mono } from 'next/font/google'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
-export default function LinkItem({ link, handleEditLink }: { link: LINK; handleEditLink?: (link: LINK) => void }) {
+export default function LinkItem({
+	link,
+	handleEditLink,
+	handleDeleteLink
+}: {
+	link: LINK
+	handleEditLink?: (link: LINK) => void
+	handleDeleteLink?: (link: LINK) => void
+}) {
 	const linkUrl = `shorly.pw/${link.alias}`
 
 	const copyLinkUrl = async () => {
@@ -17,7 +25,7 @@ export default function LinkItem({ link, handleEditLink }: { link: LINK; handleE
 	}
 
 	return (
-		<div className='flex flex-col gap-2 w-full mx-auto'>
+		<div className='flex flex-col gap-3 w-full h-full mx-auto'>
 			<div className='flex items-center'>
 				<div className='flex-1'>
 					<Link
@@ -38,15 +46,26 @@ export default function LinkItem({ link, handleEditLink }: { link: LINK; handleE
 				</div>
 			</div>
 			<div className='overflow-hidden whitespace-nowrap overflow-ellipsis opacity-90'>{link.url}</div>
+			<div className='grow overflow-hidden overflow-ellipsis line-clamp-3'>
+				{link.description === null || link.description.length === 0 ? (
+					<span className='opacity-60'>Edit to add a description</span>
+				) : (
+					link.description
+				)}
+			</div>
 			<div className='flex gap-2 items-end'>
-				<div className='flex-1 overflow-hidden overflow-ellipsis line-clamp-3 h-[4.6rem]'>
-					{link.description === null || link.description.length === 0 ? (
-						<span className='opacity-60'>Edit to add a description</span>
-					) : (
-						link.description
-					)}
+				<div className='w-24'>
+					<Button
+						withColor='color-error'
+						onclick={() => {
+							if (handleDeleteLink !== undefined) {
+								handleDeleteLink(link)
+							}
+						}}>
+						<IconTrash /> Delete
+					</Button>
 				</div>
-				<div className='w-20 ml-auto h-12'>
+				<div className='w-20 ml-auto'>
 					<Button
 						onclick={() => {
 							if (handleEditLink !== undefined) {
