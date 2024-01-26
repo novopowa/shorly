@@ -5,12 +5,14 @@ import { useSession } from '../../hooks/useSession'
 import { type MENU } from '../../types/menu'
 import ButtonLink from '../ui/button-link'
 import { type Session } from '@supabase/auth-helpers-nextjs'
+import { IconLinkPlus } from '@tabler/icons-react'
 
 function Menu({ session }: { session: Session | null }) {
 	const { handleSignOut } = useSession()
 
 	const menu: MENU[] = [
 		{
+			icon: <IconLinkPlus />,
 			name: 'Create Link',
 			action: '/dashboard/?new=link',
 			permission: 'user'
@@ -50,7 +52,8 @@ function Menu({ session }: { session: Session | null }) {
 					return (
 						<li
 							key={item.name}
-							className='[&:first-child>a]:rounded-bl-lg [&:first-child>button]:rounded-bl-lg [&:last-child>a]:rounded-br-lg [&:last-child>button]:rounded-br-lg'>
+							className='[&:first-child>a]:rounded-bl-lg [&:first-child>button]:rounded-bl-lg [&:last-child>a]:rounded-br-lg [&:last-child>button]:rounded-br-lg 
+							[&>a>svg]:h-5 [&>a>svg]:text-[rgb(var(--green))] [&>a>svg]:-mt-1 [&>a>svg]:-ml-2'>
 							<ButtonLink action={item.action} target={item.target}>
 								{item.icon} {item.name}
 							</ButtonLink>
