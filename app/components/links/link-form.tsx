@@ -24,7 +24,7 @@ function LinkForm({
 	session: Session | null
 	handleAnonymousSubmit?: (link: LINK) => void
 	modalMode?: string
-	handleAfterSubmit: () => void
+	handleAfterSubmit?: () => void
 	link?: LINK
 }) {
 	const [longURL, setLongURL] = useState<string>('')

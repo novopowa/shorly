@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { type LINK } from '../types/links'
 
 interface props {
-	modalLink: LINK
+	modalLink: LINK | undefined
 	modalMode: null | 'insert' | 'update' | 'delete'
 	editModal: (link: LINK) => void
 	deleteModal: (link: LINK) => void

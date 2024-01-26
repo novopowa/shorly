@@ -99,14 +99,14 @@ function LinkList({ session }: { session: Session }) {
 				{modalMode === null ? (
 					''
 				) : modalMode === 'delete' ? (
-					<Modal title={`DELETE LINK /${modalLink.alias}`} modalMode={modalMode} handleCloseModal={closeModal}>
+					<Modal title={`DELETE LINK /${modalLink?.alias}`} modalMode={modalMode} handleCloseModal={closeModal}>
 						<LinkDelete link={modalLink} handleAfterSubmit={handleAfterSubmit} />
 					</Modal>
 				) : (
 					<Modal
 						title={`
 					${modalMode === 'insert' ? 'NEW LINK' : ''}
-					${modalMode === 'update' ? `EDIT LINK /${modalLink.alias}` : ''}
+					${modalMode === 'update' ? `EDIT LINK /${modalLink?.alias}` : ''}
 				`}
 						modalMode={modalMode}
 						handleCloseModal={closeModal}>
