@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useSession } from '../../hooks/useSession'
 import { type MENU } from '../../types/menu'
 import ButtonLink from '../ui/button-link'
@@ -56,8 +57,18 @@ function Menu({ session }: { session: Session | null }) {
 						</li>
 					)
 				})}
+				{session !== null && session.user.user_metadata.avatar_url !== undefined && (
+					<li>
+						<Image
+							src={session.user.user_metadata.avatar_url}
+							alt='User image'
+							width={38}
+							height={38}
+							className='h-[38px] bgcolor-white rounded-br-3xl'
+						/>
+					</li>
+				)}
 			</ul>
-			{/* <AuthButtonServer /> */}
 		</nav>
 	)
 }
