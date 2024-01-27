@@ -6,7 +6,7 @@ import Textarea from '../ui/textarea'
 import AnonymousHomeButtons from '../home/anonymous-home-buttons'
 import { type Session } from '@supabase/auth-helpers-nextjs'
 import { type LINK } from '../../types/links'
-import { Reload } from '../icons'
+import { IconRefresh } from '@tabler/icons-react'
 import { Roboto_Mono } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useAlias } from '../../hooks/useAlias'
@@ -81,8 +81,8 @@ function LinkForm({
 								})
 							}}
 							loading={loadingGenerateAlias}>
-							<span className='flex'>
-								<Reload /> Generate
+							<span className='flex [&>svg]:h-5'>
+								<IconRefresh /> Generate
 							</span>
 						</Button>
 					</div>
