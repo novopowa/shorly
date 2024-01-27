@@ -18,7 +18,7 @@ function AuthButton({
 			signUpLinkData !== undefined
 				? `?url=${encodeURIComponent(signUpLinkData.url)}&alias=${encodeURIComponent(signUpLinkData.alias)}`
 				: ''
-		const redirectUrl = `http://localhost:3000/auth/callback${linkData}`
+		const redirectUrl = `https://shorly.vercel.app/auth/callback${linkData}`
 		await supabase.auth.signInWithOAuth({
 			provider,
 			options: {

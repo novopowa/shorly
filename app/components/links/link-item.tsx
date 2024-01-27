@@ -22,7 +22,7 @@ export default function LinkItem({
 	modalMode?: string | null
 	handleAnonymousSubmitEnded?: () => void
 }) {
-	const linkUrl = `shorly.pw/${link.alias}`
+	const linkUrl = `/${link.alias}`
 
 	// COUNTDOWN
 	const oneDay = new Date(new Date().setHours(new Date().getHours() + 24)).toISOString()
@@ -60,10 +60,10 @@ export default function LinkItem({
 			<div className='flex items-center'>
 				<div className='flex-1'>
 					<Link
-						href={`https://${linkUrl}`}
+						href={linkUrl}
 						target='_blank'
 						className={`${robotoMono.className} tracking-tighter block w-full text-[1.75rem] py-2 rounded-lg bg-transparent underline underline-offset-[3px] hover:opacity-85`}>
-						shorly.cc/<span className='color-green'>{link.alias}</span>
+						shorly.pw/<span className='color-green'>{link.alias}</span>
 					</Link>
 				</div>
 				<div className='flex-[auto_5rem]'>

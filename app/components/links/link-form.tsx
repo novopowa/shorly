@@ -61,7 +61,7 @@ function LinkForm({
 			/>
 			{modalMode === undefined || modalMode === 'insert' ? (
 				<div className='flex md:gap-1'>
-					<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.cc/</span>
+					<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.pw/</span>
 					<Input
 						id='alias'
 						label='Write or generate an Alias'
