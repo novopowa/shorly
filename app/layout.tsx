@@ -23,7 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				<main>{children}</main>
 				<ToastContainer
 					position='bottom-right'
-					autoClose={250000}
+					autoClose={2000}
 					hideProgressBar={false}
 					newestOnTop={false}
 					closeOnClick

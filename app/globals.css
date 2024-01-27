@@ -40,6 +40,10 @@ body {
 	background-color: rgb(var(--white)); 
 }
 
+.border-color-black{
+	border-color: rgb(var(--black)); 
+}
+
 .border-color-gray{
 	border-color: rgba(var(--black),0.1); 
 }

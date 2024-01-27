@@ -91,6 +91,7 @@ function LinkList({ session }: { session: Session }) {
 										handleDeleteLink={() => {
 											deleteModal(link)
 										}}
+										modalMode={modalMode}
 									/>
 								</div>
 							))}

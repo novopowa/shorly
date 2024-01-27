@@ -8,9 +8,12 @@ import { type LINK } from '@/app/types/links'
 
 export default function HomeBlock({ session }: { session: Session | null }) {
 	const [anonymousLink, setAnonymousLink] = useState<LINK>()
-
 	const handleAnonymousSubmit = (link: LINK): void => {
 		setAnonymousLink(link)
+	}
+
+	const handleAnonymousSubmitEnded = (): void => {
+		setAnonymousLink(undefined)
 	}
 
 	return (
@@ -18,7 +21,7 @@ export default function HomeBlock({ session }: { session: Session | null }) {
 			{anonymousLink === undefined ? (
 				<LinkForm session={session} handleAnonymousSubmit={handleAnonymousSubmit} />
 			) : (
-				<LinkItem link={anonymousLink} />
+				<LinkItem link={anonymousLink} handleAnonymousSubmitEnded={handleAnonymousSubmitEnded} />
 			)}
 		</div>
 	)

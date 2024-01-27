@@ -13,7 +13,7 @@ function useLinkSubmit({
 	description,
 	session,
 	handleAnonymousSubmit,
-	modalMode = 'insert',
+	modalMode,
 	handleAfterSubmit
 }: {
 	url: string
@@ -31,14 +31,13 @@ function useLinkSubmit({
 	const [loadingAnonymousButton, setLoadingAnonymousButton] = useState(false)
 	const [loadingSubmitButton, setLoadingSubmitButton] = useState(false)
 	const handleTypeOfSubmit = async (link: any, formData: FormData) => {
-		if (modalMode === 'insert') {
+		if (modalMode === undefined || modalMode === 'insert') {
 			return await insertLink(formData)
 		} else if (modalMode === 'update') {
 			return await updateLink(formData)
 		}
 	}
 	const [formState, formAction] = useFormState(handleTypeOfSubmit, null)
-
 	// WE REALLY USE ACTION FOR SUBMIT, SO THIS SUBMIT EVENT IS USED TO START THE BUTTON LOADING
 	// IN THE FUTURE MAYBE CHANGE IT FOR useOptimistic
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -57,10 +56,11 @@ function useLinkSubmit({
 		const validateOnChange = async () => {
 			if (errors.length > 0) {
 				let result = { isValid: false, errors: [''] }
+				if (modalMode === undefined || modalMode === 'insert') {
+					result = await validateInsert(url, alias, description)
+				}
 				if (modalMode === 'update') {
 					result = validateUpdate(url, alias)
-				} else {
-					result = await validateInsert(url, alias, description)
 				}
 				setErrors(result.errors)
 			}
@@ -93,8 +93,7 @@ function useLinkSubmit({
 				if (link !== null && session === null && handleAnonymousSubmit !== undefined) {
 					handleAnonymousSubmit(link)
 				}
-
-				if (modalMode === 'insert') {
+				if (modalMode === 'insert' || (modalMode === undefined && session !== null)) {
 					toast('🔗 Link created!')
 					setTimeout(() => {
 						router.push('/dashboard')
