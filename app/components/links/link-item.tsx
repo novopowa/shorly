@@ -22,7 +22,7 @@ export default function LinkItem({
 	modalMode?: string | null
 	handleAnonymousSubmitEnded?: () => void
 }) {
-	const linkUrl = `/${link.alias}`
+	const linkUrl = `https://shorly.pw/${link.alias}`
 
 	// COUNTDOWN
 	const oneDay = new Date(new Date().setHours(new Date().getHours() + 24)).toISOString()
