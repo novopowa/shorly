@@ -62,7 +62,7 @@ function useLinkSubmit({
 				if (modalMode === 'update') {
 					result = validateUpdate(url, alias)
 				}
-				setErrors(result.errors)
+				setErrors(result.errors.filter(e => e !== ''))
 			}
 		}
 		validateOnChange()
@@ -83,7 +83,7 @@ function useLinkSubmit({
 		const formIsSignUp: boolean = formState?.isSignUp === undefined ? false : formState?.isSignUp
 		const formErrorsFiltered: string[] = formErrors.filter(e => e !== '')
 		const formWithoutErrors: boolean = formErrorsFiltered.length === 0
-		setErrors(formErrors)
+		setErrors(formErrorsFiltered)
 		if (formWithoutErrors) {
 			if (formIsSignUp) {
 				const linkData = { url, alias }

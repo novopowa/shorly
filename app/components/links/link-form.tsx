@@ -6,7 +6,7 @@ import Textarea from '../ui/textarea'
 import AnonymousHomeButtons from '../home/anonymous-home-buttons'
 import { type Session } from '@supabase/auth-helpers-nextjs'
 import { type LINK } from '../../types/links'
-import { IconRefresh } from '@tabler/icons-react'
+import { IconExclamationCircle, IconRefresh } from '@tabler/icons-react'
 import { Roboto_Mono } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useAlias } from '../../hooks/useAlias'
@@ -106,11 +106,20 @@ function LinkForm({
 					<></>
 				)}
 			</div>
-			<div id='errorUrl' className='color-error text-sm mb-3'>
-				{errors.map(e => (
-					<p key={e}>{e}</p>
-				))}
-			</div>
+			{errors !== null && errors.length > 0 && (
+				<div className='flex color-error p-4 text-sm mb-3 rounded-lg bg-[rgba(var(--red),0.1)]'>
+					<IconExclamationCircle className='-mt-[0.15rem] mr-3' />
+					<span className='sr-only'>Danger</span>
+					<div>
+						<span className='font-medium'>Please review and correct the following issues:</span>
+						<ul className='mt-1.5 list-disc list-inside'>
+							{errors.map(e => {
+								return <li key={e}>{e}</li>
+							})}
+						</ul>
+					</div>
+				</div>
+			)}
 			<div>
 				{session === null ? (
 					<AnonymousHomeButtons

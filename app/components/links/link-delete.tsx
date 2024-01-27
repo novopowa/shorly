@@ -1,5 +1,5 @@
 import { type LINK } from '@/app/types/links'
-import { IconAlertTriangleFilled } from '@tabler/icons-react'
+import { IconAlertTriangleFilled, IconExclamationCircle } from '@tabler/icons-react'
 import Input from '../ui/input'
 import Button from '../ui/button'
 import { deleteLink } from '../../services/links'
@@ -50,7 +50,20 @@ function LinkDelete({ handleAfterSubmit, link }: { handleAfterSubmit: () => void
 				<Input id='alias' label={`Alias`} max={5} required />
 				<input type='hidden' value={link?.alias} name='original_alias' />
 			</div>
-			<div className='color-error text-sm mb-3'>{errors?.map((e: string) => <p key={e}>{e}</p>)}</div>
+			{errors !== null && errors.length > 0 && (
+				<div className='flex color-error p-4 text-sm mb-3 rounded-lg bg-[rgba(var(--red),0.1)]'>
+					<IconExclamationCircle className='-mt-[0.15rem] mr-3' />
+					<span className='sr-only'>Danger</span>
+					<div>
+						<span className='font-medium'>Please review and correct the following issues:</span>
+						<ul className='mt-1.5 list-disc list-inside'>
+							{errors.map(e => {
+								return <li key={e}>{e}</li>
+							})}
+						</ul>
+					</div>
+				</div>
+			)}
 			<div>
 				<Button type='submit' loading={loadingSubmitButton}>
 					DELETE LINK
