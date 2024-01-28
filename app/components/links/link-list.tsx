@@ -67,7 +67,7 @@ function LinkList({ session }: { session: Session }) {
 						margin: '3rem auto'
 					}}
 				/>
-				<div className='mx-auto max-w-7xl px-2 py-7 md:py-10 md:p-10'>
+				<div className='mx-auto max-w-7xl px-2 pb-2 pt-7 md:pt-10 md:p-10'>
 					{!loading && linksFiltered.length === 0 && <div className='text-center'>NO LINKS FOUND</div>}
 					<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4'>
 						{!loading &&
