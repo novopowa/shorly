@@ -62,7 +62,7 @@ export default function LinkItem({
 					<Link
 						href={linkUrl}
 						target='_blank'
-						className={`${robotoMono.className} tracking-tighter block w-full text-[1.75rem] py-2 rounded-lg bg-transparent underline underline-offset-[3px] hover:opacity-85`}>
+						className={`${robotoMono.className} tracking-tighter block w-full text-[1.61rem] py-2 rounded-lg bg-transparent underline underline-offset-[3px] hover:opacity-85`}>
 						shorly.pw/<span className='color-green'>{link.alias}</span>
 					</Link>
 				</div>
