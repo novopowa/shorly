@@ -60,19 +60,21 @@ function LinkForm({
 				required
 			/>
 			{modalMode === undefined || modalMode === 'insert' ? (
-				<div className='flex md:gap-1'>
-					<span className={`${robotoMono.className} color-black font-semibold text-end pt-4 flex-1`}>shorly.pw/</span>
-					<Input
-						id='alias'
-						label='Write or generate an Alias'
-						max={5}
-						value={alias}
-						handleOnChange={e => {
-							setAlias(e.target.value)
-						}}
-						required
-					/>
-					<div className='flex-[0_0_96px] fl mt-2'>
+				<div className='flex flex-wrap md:flex-nowrap md:gap-1'>
+					<span className={`${robotoMono.className} color-black font-semibold text-end pt-4`}>shorly.pw/</span>
+					<div className='flex-[60%] md:flex-1'>
+						<Input
+							id='alias'
+							label='Write or generate an Alias'
+							max={5}
+							value={alias}
+							handleOnChange={e => {
+								setAlias(e.target.value)
+							}}
+							required
+						/>
+					</div>
+					<div className='mb-3 md:mb-0 -mt-2 md:mt-2 ml-auto'>
 						<Button
 							onclick={() => {
 								setLoadingGenerateAlias(true)

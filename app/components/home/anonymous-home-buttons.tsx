@@ -13,7 +13,7 @@ function AnonymousHomeButtons({
 	return (
 		<>
 			<h2 className='uppercase text-center color-black pb-3'>Choose an option</h2>
-			<div className='flex md:gap-1'>
+			<div className='flex flex-col md:flex-row gap-2 md:gap-1 [&>button]:min-h-20'>
 				<Button type='submit' name='anonymousButton' withColor={false} loading={loadingAnonymousButton}>
 					GET YOUR LINK
 					<br />
@@ -21,7 +21,9 @@ function AnonymousHomeButtons({
 					<span className='block text-xs'>Your link will expire in 24 hrs.</span>
 				</Button>
 				<Button type='submit' name='signupButton'>
-					SIGN UP AND GET YOUR UNEXPIRING LINK
+					SIGN UP AND GET YOUR
+					<br />
+					UNEXPIRING LINK
 				</Button>
 			</div>
 			<div
