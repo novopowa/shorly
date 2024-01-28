@@ -17,7 +17,7 @@ export default function HomeBlock({ session }: { session: Session | null }) {
 	}
 
 	return (
-		<div className='absolute left-10 w-full max-w-md top-1/2 transform -translate-y-1/2 bgcolor-white rounded-lg p-5 z-10'>
+		<div className='absolute left-1/2 md:left-10 -translate-x-1/2 md:-translate-x-0 w-full max-w-md top-1/2 transform -translate-y-1/2 bgcolor-white rounded-lg p-5 z-10'>
 			{anonymousLink === undefined ? (
 				<LinkForm session={session} handleAnonymousSubmit={handleAnonymousSubmit} />
 			) : (
