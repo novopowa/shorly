@@ -6,11 +6,19 @@ import { type MENU } from '../../types/menu'
 import ButtonLink from '../ui/button-link'
 import { type Session } from '@supabase/auth-helpers-nextjs'
 import { IconLinkPlus, IconMenu2, IconX } from '@tabler/icons-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function Menu({ session }: { session: Session | null }) {
 	const { handleSignOut } = useSession()
 	const [opened, setOpened] = useState(false)
+	const menuRef = useRef<HTMLElement>(null)
+
+	const handleOutSideClick = (e: MouseEvent) => {
+		const clickSource = menuRef.current?.contains(e.target as Node)
+		if (!(clickSource ?? false)) {
+			setOpened(false)
+		}
+	}
 
 	const toogleMenu = () => {
 		setOpened(currentState => !currentState)
@@ -18,7 +26,12 @@ function Menu({ session }: { session: Session | null }) {
 	const handleResize = () => {
 		setOpened(current => (window.innerWidth > 768 ? true : current))
 	}
+
 	useEffect(() => {
+		// CLOSE MENU ON ANY CLICK
+		window.addEventListener('mousedown', handleOutSideClick)
+
+		// WINDOW RESIZE
 		handleResize()
 		window.addEventListener('resize', handleResize)
 		return () => {
@@ -30,29 +43,42 @@ function Menu({ session }: { session: Session | null }) {
 		{
 			icon: <IconLinkPlus />,
 			name: 'Create Link',
-			action: '/dashboard/?new=link',
+			href: '/dashboard/?new=link',
+			action: () => {
+				setOpened(false)
+			},
 			permission: 'user'
 		},
 		{
 			name: 'Dashboard',
-			action: '/dashboard',
+			href: '/dashboard',
+			action: () => {
+				setOpened(false)
+			},
 			permission: 'user'
 		},
 		{
 			name: 'Report a bug',
-			action: 'https://github.com/novopowa/shorly/issues',
-			target: '_blank'
+			href: 'https://github.com/novopowa/shorly/issues',
+			target: '_blank',
+			action: () => {
+				setOpened(false)
+			}
 		},
 		{
 			name: 'Log out',
 			action: () => {
 				handleSignOut()
+				setOpened(false)
 			},
 			permission: 'user'
 		},
 		{
 			name: 'Sign in',
-			action: '/auth',
+			href: '/auth',
+			action: () => {
+				setOpened(false)
+			},
 			permission: 'anonymous'
 		}
 	]
@@ -62,7 +88,7 @@ function Menu({ session }: { session: Session | null }) {
 	)
 
 	return (
-		<nav className='flex justify-end flex-1 mr-4 md:mr-10 h-8 md:h-9 '>
+		<nav ref={menuRef} className='flex justify-end flex-1 mr-4 md:mr-10 h-8 md:h-9 '>
 			<button onClick={toogleMenu} className='flex items-end md:hidden'>
 				{opened ? (
 					<IconX />
@@ -83,6 +109,7 @@ function Menu({ session }: { session: Session | null }) {
 							className='md:[&:first-child>a]:rounded-bl-lg md:[&:first-child>button]:rounded-bl-lg md:[&:last-child>a]:rounded-br-lg md:[&:last-child>button]:rounded-br-lg 
 							[&>a>svg]:h-5 [&>a>svg]:text-[rgb(var(--green))] [&>a>svg]:-mt-1 [&>a>svg]:-ml-2'>
 							<ButtonLink
+								href={item.href}
 								action={item.action}
 								target={item.target}
 								className='w-full md:w-auto inline-flex items-center px-4 py-2 text-sm font-medium border border-color-gray  focus:z-10 bg-[rgb(var(--white))] color-black hover:bg-[rgba(var(--white),0.85)]'>

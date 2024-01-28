@@ -3,19 +3,22 @@ import { type ReactNode } from 'react'
 
 function ButtonLink({
 	children,
+	href = '',
 	action,
 	target,
 	className
 }: {
 	children: ReactNode
-	action: string | React.MouseEventHandler<HTMLButtonElement>
+	href?: string
+	action?: () => void
 	target: string | undefined
 	className?: string
 }) {
-	if (typeof action === 'string') {
+	if (href.length > 0) {
 		return (
 			<Link
-				href={action}
+				href={href}
+				onClick={action}
 				target={target}
 				className={
 					className ??
