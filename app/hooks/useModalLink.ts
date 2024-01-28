@@ -39,6 +39,10 @@ function useModalLink(): props {
 		}
 	}, [searchParams])
 
+	useEffect(() => {
+		document.body.style.overflow = modalMode === null ? 'auto' : 'hidden'
+	}, [modalMode])
+
 	return { modalLink: editLink, modalMode, editModal, deleteModal, closeModal }
 }
 
