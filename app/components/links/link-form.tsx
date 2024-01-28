@@ -69,7 +69,7 @@ function LinkForm({
 							max={5}
 							value={alias}
 							handleOnChange={e => {
-								setAlias(e.target.value)
+								setAlias(e.target.value.length > 5 ? e.target.value.slice(0, 5) : e.target.value)
 							}}
 							required
 						/>
