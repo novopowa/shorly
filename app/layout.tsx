@@ -33,7 +33,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 					pauseOnHover
 					theme='colored'
 					transition={Slide}
-					style={{ width: 'auto' }}
 				/>
 			</body>
 		</html>

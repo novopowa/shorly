@@ -61,6 +61,14 @@ body {
 }
 
 
+.Toastify__toast-container{
+	width: auto !important;
+}
+@media (max-width: 480px) {
+	.Toastify__toast-container{
+		width: 100% !important;	
+	}
+}
 .Toastify__toast-theme--colored.Toastify__toast--default{
 	color: rgb(var(--black)); 
 }
