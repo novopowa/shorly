@@ -16,8 +16,12 @@ function Menu({ session }: { session: Session | null }) {
 	const handleOutSideClick = (e: MouseEvent) => {
 		const clickSource = menuRef.current?.contains(e.target as Node)
 		if (!(clickSource ?? false)) {
-			setOpened(false)
+			closeMenu()
 		}
+	}
+
+	const closeMenu = () => {
+		window.innerWidth <= 768 && setOpened(false)
 	}
 
 	const toogleMenu = () => {
@@ -45,7 +49,7 @@ function Menu({ session }: { session: Session | null }) {
 			name: 'Create Link',
 			href: '/dashboard/?new=link',
 			action: () => {
-				setOpened(false)
+				closeMenu()
 			},
 			permission: 'user'
 		},
@@ -53,7 +57,7 @@ function Menu({ session }: { session: Session | null }) {
 			name: 'Dashboard',
 			href: '/dashboard',
 			action: () => {
-				setOpened(false)
+				closeMenu()
 			},
 			permission: 'user'
 		},
@@ -62,14 +66,14 @@ function Menu({ session }: { session: Session | null }) {
 			href: 'https://github.com/novopowa/shorly/issues',
 			target: '_blank',
 			action: () => {
-				setOpened(false)
+				closeMenu()
 			}
 		},
 		{
 			name: 'Log out',
 			action: () => {
 				handleSignOut()
-				setOpened(false)
+				closeMenu()
 			},
 			permission: 'user'
 		},
@@ -77,7 +81,7 @@ function Menu({ session }: { session: Session | null }) {
 			name: 'Sign in',
 			href: '/auth',
 			action: () => {
-				setOpened(false)
+				closeMenu()
 			},
 			permission: 'anonymous'
 		}
