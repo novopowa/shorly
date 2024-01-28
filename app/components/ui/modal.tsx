@@ -18,7 +18,7 @@ function Modal({
 				id='crud-modal'
 				tabIndex={-1}
 				aria-hidden='true'
-				className='flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full'>
+				className='flex overflow-y-auto overflow-x-hidden fixed top-0 right-2 left-2 z-50 justify-center items-center w-auto min-[460px]:w-full md:inset-0 h-[calc(100%-1rem)] max-h-full'>
 				<div className='fixed inset-0 bg-black/60' aria-hidden='true' />
 				<div className='relative w-full max-w-md max-h-full'>
 					<div className='relative rounded-lg shadow bgcolor-white'>
