@@ -12,8 +12,11 @@ function Menu({ session }: { session: Session | null }) {
 	const { handleSignOut } = useSession()
 	const [opened, setOpened] = useState(false)
 
+	const toogleMenu = () => {
+		setOpened(currentState => !currentState)
+	}
 	const handleResize = () => {
-		setOpened(window.innerWidth > 768)
+		setOpened(current => (window.innerWidth > 768 ? true : current))
 	}
 	useEffect(() => {
 		handleResize()
@@ -57,10 +60,6 @@ function Menu({ session }: { session: Session | null }) {
 	const currentMenu = menu.filter(item =>
 		session === null ? item.permission !== 'user' : item.permission !== 'anonymous'
 	)
-
-	const toogleMenu = () => {
-		setOpened(currentState => !currentState)
-	}
 
 	return (
 		<nav className='flex justify-end flex-1 mr-4 md:mr-10 h-8 md:h-9 '>
