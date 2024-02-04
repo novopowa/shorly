@@ -7,7 +7,7 @@ import { type Session } from '@supabase/supabase-js'
 
 function Wallpaper({ session }: { session: Session | null }) {
 	const [url, setUrl] = useState<string | undefined>()
-	const [show, setShow] = useState<boolean | undefined>()
+	const [show, setShow] = useState<boolean | undefined>(session === null)
 
 	useEffect(() => {
 		const getImage = async () => {
