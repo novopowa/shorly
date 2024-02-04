@@ -8,7 +8,7 @@ export default async function Home() {
 	return (
 		<>
 			<HomeBlock session={session} />
-			<Wallpaper />
+			<Wallpaper session={session} />
 		</>
 	)
 }

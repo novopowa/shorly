@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react'
 import { getUnsplashImage } from '@/app/services/unsplash'
 import Image from 'next/image'
+import { type Session } from '@supabase/supabase-js'
 
-function Wallpaper() {
+function Wallpaper({ session }: { session: Session | null }) {
 	const [url, setUrl] = useState<string | undefined>()
 
 	useEffect(() => {
@@ -27,7 +28,7 @@ function Wallpaper() {
 					className='object-cover animate-fade animate-duration-[2500ms] animate-delay-[2000ms] animate-ease-in'
 				/>
 			)}
-			<div className='absolute bottom-0 right-0'>controls</div>
+			{session !== null && <div className='absolute bottom-0 right-0'>controls</div>}
 		</div>
 	)
 }
