@@ -48,20 +48,23 @@ export interface Database {
         Row: {
           avatar_url: string
           created_at: string
+          email: string
           id: string
-          username: string
+          show_wallpaper: boolean
         }
         Insert: {
           avatar_url: string
           created_at?: string
+          email: string
           id: string
-          username: string
+          show_wallpaper?: boolean
         }
         Update: {
           avatar_url?: string
           created_at?: string
+          email?: string
           id?: string
-          username?: string
+          show_wallpaper?: boolean
         }
         Relationships: [
           {

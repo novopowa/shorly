@@ -5,7 +5,9 @@ const bree = Bree_Serif({ subsets: ['latin'], weight: '400' })
 
 function Title() {
 	return (
-		<Link href='/' className={`flex gap-1 items-center w-50 mt-9 bgcolor-white h-12 rounded-r-lg`}>
+		<Link
+			href='/'
+			className={`flex gap-1 items-center w-50 mt-9 bgcolor-white h-12 rounded-r-lg shadow-[0_0_10px_rgba(0,0,0,0.6)]`}>
 			<Image src='/images/logo.webp' alt='Logo of Shorly' width={80} height={80} className='block h-20 w-20' priority />
 			<h1 className={`uppercase -mt-1 text-3xl color-black mr-3 ${bree.className}`}>Shorly</h1>
 		</Link>

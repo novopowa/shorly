@@ -17,7 +17,7 @@ export default function HomeBlock({ session }: { session: Session | null }) {
 	}
 
 	return (
-		<div className='absolute left-2 right-2 translate-x-0 min-[460px]:left-1/2 md:left-10 min-[460px]:-translate-x-1/2 md:-translate-x-0 w-auto min-[460px]:w-full max-w-md top-32 md:top-1/2 md:-translate-y-1/2 bgcolor-white rounded-lg p-2 pt-4 md:p-5 z-10'>
+		<div className='absolute left-2 right-2 translate-x-0 min-[460px]:left-1/2 md:left-10 min-[460px]:-translate-x-1/2 md:-translate-x-0 w-auto min-[460px]:w-full max-w-md top-32 md:top-1/2 md:-translate-y-1/2 bgcolor-white rounded-lg p-2 pt-4 md:p-5 z-10 shadow-[0_0_10px_rgba(0,0,0,0.6)]'>
 			{anonymousLink === undefined ? (
 				<LinkForm session={session} handleAnonymousSubmit={handleAnonymousSubmit} />
 			) : (

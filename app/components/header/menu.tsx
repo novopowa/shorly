@@ -104,7 +104,7 @@ function Menu({ session }: { session: Session | null }) {
 				)}
 			</button>
 			<ul
-				className={`${opened ? '' : 'hidden'} flex flex-col md:flex-row absolute top-9 md:top-0 rounded-lg overflow-hidden md:rounded-none md:relative shadow-sm md:shadow-none`}
+				className={`${opened ? '' : 'hidden'} flex flex-col md:flex-row absolute top-9 md:top-0 rounded-lg overflow-hidden md:rounded-none md:rounded-bl-lg ${session !== null ? 'md:rounded-br-3xl' : 'md:rounded-br-lg'} md:relative shadow-sm md:shadow-[0_0_10px_rgba(0,0,0,0.6)]`}
 				role='group'>
 				{currentMenu.map(item => {
 					return (
