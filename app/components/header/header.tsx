@@ -4,7 +4,7 @@ import Title from './title'
 
 function Header({ session }: { session: Session | null }) {
 	return (
-		<header className='flex gap-2 mb-11'>
+		<header className='relative flex gap-2 mb-11 z-20'>
 			<Title />
 			<Menu session={session} />
 		</header>

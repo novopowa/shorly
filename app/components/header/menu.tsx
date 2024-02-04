@@ -21,14 +21,14 @@ function Menu({ session }: { session: Session | null }) {
 	}
 
 	const closeMenu = () => {
-		window.innerWidth <= 768 && setOpened(false)
+		window.innerWidth < 768 && setOpened(false)
 	}
 
 	const toogleMenu = () => {
 		setOpened(currentState => !currentState)
 	}
 	const handleResize = () => {
-		setOpened(current => (window.innerWidth > 768 ? true : current))
+		setOpened(current => (window.innerWidth >= 768 ? true : current))
 	}
 
 	useEffect(() => {
@@ -104,7 +104,7 @@ function Menu({ session }: { session: Session | null }) {
 				)}
 			</button>
 			<ul
-				className={`${opened ? '' : 'hidden'} flex flex-col md:flex-row absolute top-9 md:top-0 rounded-lg overflow-hidden md:rounded-none md:relative shadow-sm md:shadow-none z-20`}
+				className={`${opened ? '' : 'hidden'} flex flex-col md:flex-row absolute top-9 md:top-0 rounded-lg overflow-hidden md:rounded-none md:relative shadow-sm md:shadow-none`}
 				role='group'>
 				{currentMenu.map(item => {
 					return (
