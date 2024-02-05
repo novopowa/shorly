@@ -98,14 +98,3 @@ export const deleteLink = async (state: string[] | null, formData: FormData): Pr
 	}
 	return errors
 }
-
-export const deleteAllAnonymousLinks = async (): Promise<void> => {
-	/* const date = 
-	if (isValid) {
-		const { error } = await supabase.from('links').delete().eq('alias', alias)
-		if (error !== null) {
-			return ['Database error']
-		}
-	}
-	return errors */
-}
