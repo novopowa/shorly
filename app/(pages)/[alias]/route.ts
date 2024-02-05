@@ -13,6 +13,7 @@ export async function GET(
 		'use server'
 		const supabase = createServerComponentClient<Database>({ cookies })
 		const { error, data } = await supabase.from('links').select('*').eq('alias', alias)
+
 		if (error !== null) {
 			notFound()
 		}
