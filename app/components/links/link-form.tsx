@@ -53,6 +53,11 @@ function LinkForm({
 
 	return (
 		<form className='w-full mx-auto' action={formAction} onSubmit={handleSubmit}>
+			{modalMode === undefined && (
+				<h2 className='color-black font-bold text-lg mb-2'>
+					Create Your Short Link Now for <span className='color-green'>FREE!</span>
+				</h2>
+			)}
 			<Textarea
 				id='url'
 				label='Paste the long URL to be shortened'
