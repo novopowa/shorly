@@ -11,6 +11,8 @@ import { Roboto_Mono } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useAlias } from '../../hooks/useAlias'
 import useLinkSubmit from '@/app/hooks/useLinkSubmit'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { validateCaptcha } from '@/app/services/links'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
@@ -31,6 +33,7 @@ function LinkForm({
 	const [alias, setAlias, generateCode] = useAlias()
 	const [description, setDescription] = useState<string | null>(null)
 	const [loadingGenerateAlias, setLoadingGenerateAlias] = useState(false)
+	const [validCaptcha, setValidCaptcha] = useState(false)
 	const {
 		formAction, // FORM ACTION
 		handleSubmit, // SUBMIT EVENT FOR LOADINGS
@@ -120,6 +123,18 @@ function LinkForm({
 							})}
 						</ul>
 					</div>
+				</div>
+			)}
+			{session === null && (
+				<div className='flex justify-center mb-3'>
+					<ReCAPTCHA
+						sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''}
+						onChange={async (e: string | null) => {
+							await validateCaptcha(e)
+							setValidCaptcha(true)
+						}}
+					/>
+					<input type='hidden' name='captcha' value={validCaptcha.toString()} />
 				</div>
 			)}
 			<div>

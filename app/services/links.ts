@@ -10,6 +10,15 @@ import { getSession } from '../utils/session'
 
 const supabase = createServerComponentClient<Database>({ cookies })
 
+export const validateCaptcha = async (token: string | null): Promise<boolean> => {
+	const res = await fetch(
+		`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+		{ cache: 'no-cache' }
+	)
+	const result = await res.json()
+	return result.success
+}
+
 export const aliasIsRepeated = async (alias: string): Promise<boolean> => {
 	const { data, error } = await supabase.from('links').select('alias').eq('alias', alias)
 	if (error !== null) {
@@ -48,10 +57,12 @@ export const insertLink = async (
 	const alias: string = formData.get('alias')?.toString() ?? ''
 	const description: string | null = formData.get('description')?.toString() ?? null
 	const isSignUp: boolean = formData.get('signupButton')?.toString() !== undefined
+	const captcha: boolean =
+		formData.get('captcha')?.toString() !== undefined ? formData.get('captcha')?.toString() === 'true' : true
 	if (!isSignUp && !(await validateMaxIps(ip))) {
-		return { link: null, errors: ['Anonymous link creation limit reached for today. Please try again tomorrow'] }
+		return { link: null, errors: ['Anonymous link creation limit reached for today. Please try again tomorrow.'] }
 	}
-	const { isValid, errors } = await validateInsert(url, alias, description)
+	const { isValid, errors } = await validateInsert(url, alias, description, captcha)
 	if (isValid && !isSignUp) {
 		const session = await getSession()
 		const { error, data } = await supabase
@@ -59,7 +70,7 @@ export const insertLink = async (
 			.insert({ url, alias, description, user_id: session?.user.id, ip })
 			.select('*')
 		if (error !== null) {
-			return { link: null, errors: ['Database error'] }
+			return { link: null, errors: ['Database error.'] }
 		}
 		const link: LINK = data[0] as unknown as LINK
 		return { link, errors: [] }
