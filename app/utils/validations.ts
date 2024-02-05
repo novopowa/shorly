@@ -27,15 +27,16 @@ const validateDescription = (description: string | null): string[] => {
 	return [descriptionLengthError]
 }
 
-const validateCaptcha = (captcha: boolean): string[] => {
-	return captcha ? [] : ['Invalid captcha. Please try again.']
+const validateCaptcha = (captcha: boolean | undefined): string[] => {
+	if (captcha === undefined) return []
+	return captcha ? [] : ['Invalid captcha. Please check it again.']
 }
 
 export const validateInsert = async (
 	longURL: string,
 	alias: string,
 	description: string | null,
-	captcha: boolean
+	captcha?: boolean | undefined
 ): Promise<{ isValid: boolean; errors: string[] }> => {
 	const longUrlErrors = validateLongUrl(longURL)
 	const aliasError = await validateAlias(alias)
