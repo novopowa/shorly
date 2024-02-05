@@ -1,6 +1,6 @@
 'use server'
 
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { type Database } from '../types/database'
 import { type LINK } from '../types/links'
@@ -18,6 +18,15 @@ export const aliasIsRepeated = async (alias: string): Promise<boolean> => {
 	return data?.length > 0
 }
 
+export const validateMaxIps = async (ip: string | null): Promise<boolean> => {
+	if (ip === null) return false
+	const { data, error } = await supabase.from('links').select('ip').eq('ip', ip)
+	if (error !== null) {
+		notFound()
+	}
+	return data?.length < 50
+}
+
 export const getLinksByUserId = async (userId: string): Promise<LINK[]> => {
 	const { data, error } = await supabase
 		.from('links')
@@ -33,16 +42,21 @@ export const getLinksByUserId = async (userId: string): Promise<LINK[]> => {
 export const insertLink = async (
 	formData: FormData
 ): Promise<{ link: LINK | null; errors: string[]; isSignUp?: boolean }> => {
+	const headersList = headers()
+	const ip = headersList.get('x-forwarded-for')
 	const url: string = formData.get('url')?.toString() ?? ''
 	const alias: string = formData.get('alias')?.toString() ?? ''
 	const description: string | null = formData.get('description')?.toString() ?? null
 	const isSignUp: boolean = formData.get('signupButton')?.toString() !== undefined
+	if (!isSignUp && !(await validateMaxIps(ip))) {
+		return { link: null, errors: ['Anonymous link creation limit reached for today. Please try again tomorrow'] }
+	}
 	const { isValid, errors } = await validateInsert(url, alias, description)
 	if (isValid && !isSignUp) {
 		const session = await getSession()
 		const { error, data } = await supabase
 			.from('links')
-			.insert({ url, alias, description, user_id: session?.user.id })
+			.insert({ url, alias, description, user_id: session?.user.id, ip })
 			.select('*')
 		if (error !== null) {
 			return { link: null, errors: ['Database error'] }
@@ -83,4 +97,15 @@ export const deleteLink = async (state: string[] | null, formData: FormData): Pr
 		}
 	}
 	return errors
+}
+
+export const deleteAllAnonymousLinks = async (): Promise<void> => {
+	/* const date = 
+	if (isValid) {
+		const { error } = await supabase.from('links').delete().eq('alias', alias)
+		if (error !== null) {
+			return ['Database error']
+		}
+	}
+	return errors */
 }
