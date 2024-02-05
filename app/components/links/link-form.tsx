@@ -129,9 +129,10 @@ function LinkForm({
 				<div className='flex justify-center mb-3'>
 					<ReCAPTCHA
 						sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''}
-						onChange={async (e: string | null) => {
-							await validateCaptcha(e)
-							setValidCaptcha(true)
+						onChange={(e: string | null) => {
+							validateCaptcha(e).then(valid => {
+								setValidCaptcha(valid)
+							})
 						}}
 					/>
 					<input type='hidden' name='captcha' value={validCaptcha.toString()} />
