@@ -84,7 +84,7 @@ You will also need to place your **Supabase project ID** in the **'supabase-enti
   "supabase-entities": "npx supabase gen types typescript --project-id [id] > ./app/types/database.ts"
 ```
 
-And also change the images in the `public` folder and the project domain **shorly.pw** within the code (this is pending improvement with a global variable)
+And also change the images in the `public` folder and the project domain **shorly.pw** within the code _(this is pending improvement with a global variable)_
 
 5. All Ready! Now run:
 
