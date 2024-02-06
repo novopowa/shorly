@@ -87,6 +87,7 @@ And also change the images in the `public` folder and the project name **SHORLY*
 5. All Ready! Now run:
 
 ```
+# Convert your Supabase Entities to Types:
 npm run supabase-entities
 
 # Run the project:
