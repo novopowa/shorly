@@ -70,6 +70,13 @@ function Menu({ session }: { session: Session | null }) {
 			}
 		},
 		{
+			name: 'Privacy',
+			href: '/privacy-policy',
+			action: () => {
+				closeMenu()
+			}
+		},
+		{
 			name: 'Log out',
 			action: () => {
 				handleSignOut()
