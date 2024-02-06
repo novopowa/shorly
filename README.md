@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="://shorly.pw">
+<a href="https://shorly.pw">
 <img src="./public/images/banner.jpg" />
 </a>
 
@@ -64,10 +64,32 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 # Unsplash API Acces Key
 UNSPLASH_ACCESS_KEY=
 
-# Vercel Cron Key (Write one by yourself and put it here and in Vercel Cron Jobs)
+# Vercel Cron Key
 CRON_SECRET=
 
 # Google Recaptcha Keys:
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=
 RECAPTCHA_SECRET_KEY=
 ```
+
+You will also need to place your **Supabase project ID** in the **'supabase-entities'** script of your package.json file.
+
+```bash
+  # /package.json
+  ...
+	"scripts": {
+		...
+		"supabase-entities": "npx supabase gen types typescript --project-id [id] > ./app/types/database.ts"
+```
+
+And also change the images in the `public` folder and the project name **SHORLY** within the code (this is pending improvement with a global variable)
+
+5. All Ready! Now run:
+
+# Convert your Supabase Entities to Types:
+
+npm run supabase-entities
+
+# Run the project:
+
+npm run dev
