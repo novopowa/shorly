@@ -23,10 +23,14 @@ As a developer, I have created this project to practice and improve my knowledge
 - ➡️ **TypeScript** ([Website](https://www.typescriptlang.org/)).
 - ➡️ **Supabase Database and Auth** ([Website](https://supabase.com/)).
 - ➡️ **TailwindCSS** ([Website](https://tailwindcss.com)) **and Flowbite components** ([Website](https://flowbite.com/docs/components/)).
-- Use of other packages like:
+- Also used other packages like:
   - ➡️ **Tailwindcss Animated** ([Website](https://www.tailwindcss-animated.com/)).
   - ➡️ **React Toastify** ([Website](https://fkhadra.github.io/react-toastify)).
   - ➡️ **Unsplash Image API** ([Website](https://unsplash.com/developers)).
+
+## 🌐 Project Deployed Website
+
+[shorly.pw](https://shorly.pw)
 
 ## 🚀 Getting Started
 
