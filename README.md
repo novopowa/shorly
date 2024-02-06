@@ -1,4 +1,4 @@
-<div >
+<div align="center">
 
 <a href="shorly.pw">
 <img src="./public/images/banner.jpg" />
@@ -19,22 +19,18 @@ Shorly was born as an alternative to many other URL shorteners, offering the opt
 
 As a developer, I have created this project to practice and improve my knowledge in the following technologies:
 
-- ✅ **Next.js 14 Framework and Server Actions**: [website](https://nextjs.org/).
-- ✅ **TypeScript**: [website](https://www.typescriptlang.org/)
-- ✅ **Supabase Database and Auth**: [website](https://supabase.com/).
-- ✅ **TailwindCSS and Flowbite components**: [Website](https://tailwindcss.com) [Website](https://flowbite.com/docs/components/).
-- ✅ Other packages like:
-  - **Tailwindcss Animated**[Website](https://www.tailwindcss-animated.com/)
-  - **React Toastify**[Website](https://fkhadra.github.io/react-toastify)
-  - **Unsplash Image API**[Website](https://unsplash.com/developers)
+- ✅ **Next.js 14 Framework and new added Server Actions** ([website])(https://nextjs.org/).
+- ✅ **TypeScript** ([website])(https://www.typescriptlang.org/)
+- ✅ **Supabase Database and Auth** ([website])(https://supabase.com/).
+- ✅ **TailwindCSS** ([Website])(https://tailwindcss.com) **and Flowbite components** ([Website])(https://flowbite.com/docs/components/).
+- ✅ Use of other packages like:
+  - **Tailwindcss Animated** ([Website])(https://www.tailwindcss-animated.com/)
+  - **React Toastify** ([Website])(https://fkhadra.github.io/react-toastify)
+  - **Unsplash Image API** ([Website])(https://unsplash.com/developers)
 
-## 🔗 HOW TO INSTALL
+## 🚀 Getting Started
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## 👨‍🚀 Getting Started
-
-> 🚧 You will need [Nodejs +16 (LTS recommended)](https://nodejs.org/en/) installed.
+> 🚨 You will need [Nodejs +18.17 (LTS recommended)](https://nodejs.org/en/) installed.
 
 1. Fork this project:
 
@@ -65,13 +61,13 @@ bun install
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
-# Unsplash Acces Key
+# Unsplash API Acces Key
 UNSPLASH_ACCESS_KEY=
 
-#Vercel Cron Key (Write one by yourself and put it on Vercel Cron Jobs )
+# Vercel Cron Key (Write one by yourself and put it here and in Vercel Cron Jobs)
 CRON_SECRET=
 
-# google Recaptcha Keys:
+# Google Recaptcha Keys:
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=
 RECAPTCHA_SECRET_KEY=
 ```
