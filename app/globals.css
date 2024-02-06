@@ -4,7 +4,7 @@
 
 :root {
 	--black: 29, 31, 38;
-	--white:230, 230, 230;
+	--white:240, 240, 240;
 	--green: 2,137,79;
 	--red: 193, 0, 0;
 	--toastify-text-color-light:  rgb(var(--black)) !important;
