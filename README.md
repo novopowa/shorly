@@ -19,14 +19,14 @@ Shorly was born as an alternative to many other URL shorteners, offering the opt
 
 As a developer, I have created this project to practice and improve my knowledge in the following technologies:
 
-- ➡️ **Next.js 14 Framework and new added Server Actions** ([website])(https://nextjs.org/).
-- ➡️ **TypeScript** ([website](https://www.typescriptlang.org/))
-- ➡️ **Supabase Database and Auth** ([website])(https://supabase.com/).
-- ➡️ **TailwindCSS** ([Website])(https://tailwindcss.com) **and Flowbite components** ([Website])(https://flowbite.com/docs/components/).
+- ➡️ **Next.js 14 Framework and new added Server Actions** ([website](https://nextjs.org/)).
+- ➡️ **TypeScript** ([website](https://www.typescriptlang.org/)).
+- ➡️ **Supabase Database and Auth** ([website](https://supabase.com/)).
+- ➡️ **TailwindCSS** ([Website](https://tailwindcss.com)) **and Flowbite components** ([Website](https://flowbite.com/docs/components/)).
 - Use of other packages like:
-  - ➡️ **Tailwindcss Animated** ([Website])(https://www.tailwindcss-animated.com/)
-  - ➡️ **React Toastify** ([Website])(https://fkhadra.github.io/react-toastify)
-  - ➡️ **Unsplash Image API** ([Website])(https://unsplash.com/developers)
+  - ➡️ **Tailwindcss Animated** ([Website](https://www.tailwindcss-animated.com/)).
+  - ➡️ **React Toastify** ([Website](https://fkhadra.github.io/react-toastify)).
+  - ➡️ **Unsplash Image API** ([Website](https://unsplash.com/developers)).
 
 ## 🚀 Getting Started
 
