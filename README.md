@@ -64,7 +64,7 @@ bun install
 
 <img src="./public/images/supabase.jpg" />
 
-<p>Also, make sure to set up functions and triggers to manage permissions.</p>
+<p>For security reasons make sure to set up functions and triggers to manage permissions.</p>
 
 5. Create a **.env** file with the following content:
 
