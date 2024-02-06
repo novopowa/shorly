@@ -58,7 +58,17 @@ pnpm install
 bun install
 ```
 
-4. Create a **.env** file with the following content:
+4. Create Supabase Database:
+
+<div align="center">
+You should have something similar to this for the project to work
+<a href="https://shorly.pw">
+<img src="./public/images/banner.jpg" />
+</a>
+Also, make sure to set up functions and triggers to manage permissions.
+</div>
+
+5. Create a **.env** file with the following content:
 
 ```bash
 # Supabase DB URL's:
@@ -86,7 +96,7 @@ You will also need to place your **Supabase project ID** in the **'supabase-enti
 
 And also change the images in the `public` folder and the project domain **shorly.pw** within the code _(this is pending improvement with a global variable)_
 
-5. All Ready! Now run:
+6. All Ready! Now run:
 
 ```
 # Convert your Supabase Entities to Types:
