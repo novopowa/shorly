@@ -62,10 +62,11 @@ bun install
 
 <div align="center">
 You should have something similar to this for the project to work
-<a href="https://shorly.pw">
-<img src="./public/images/banner.jpg" />
-</a>
+
+<img src="./public/images/supabase.jpg" />
+
 Also, make sure to set up functions and triggers to manage permissions.
+
 </div>
 
 5. Create a **.env** file with the following content:
