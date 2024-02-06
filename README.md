@@ -60,14 +60,11 @@ bun install
 
 4. Create Supabase Database:
 
-<div align="center">
-You should have something similar to this for the project to work
+<p>You should have something similar to this for the project to work</p>
 
 <img src="./public/images/supabase.jpg" />
 
-Also, make sure to set up functions and triggers to manage permissions.
-
-</div>
+<p>Also, make sure to set up functions and triggers to manage permissions.</p>
 
 5. Create a **.env** file with the following content:
 
