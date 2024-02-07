@@ -52,7 +52,7 @@ export const insertLink = async (
 	formData: FormData
 ): Promise<{ link: LINK | null; errors: string[]; isSignUp?: boolean }> => {
 	const headersList = headers()
-	const ip = headersList.get('x-forwarded-for')
+	const ip = headersList.get('CF-Connecting-IP')
 	const url: string = formData.get('url')?.toString() ?? ''
 	const alias: string = formData.get('alias')?.toString() ?? ''
 	const description: string | null = formData.get('description')?.toString() ?? null
