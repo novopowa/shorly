@@ -51,6 +51,12 @@ function useLinkSubmit({
 		}
 	}
 
+	const handleCaptcha = (captchaValid: boolean): void => {
+		if (!captchaValid) {
+			setShowSignUpOptions(false)
+		}
+	}
+
 	// VALIDATE WHILE USER WRITES ON INPUTS AND TEXTAREAS
 	useEffect(() => {
 		const validateOnChange = async () => {
@@ -89,6 +95,9 @@ function useLinkSubmit({
 				const linkData = { url, alias }
 				setSignUpLinkData(linkData)
 				setShowSignUpOptions(true)
+				setTimeout(() => {
+					window.scrollTo(0, document.body.scrollHeight)
+				}, 400)
 			} else {
 				if (link !== null && session === null && handleAnonymousSubmit !== undefined) {
 					handleAnonymousSubmit(link)
@@ -112,6 +121,7 @@ function useLinkSubmit({
 	return {
 		formAction, // FORM ACTION
 		handleSubmit, // SUBMIT EVENT FOR LOADINGS
+		handleCaptcha, // CONTROL CAPTCHA CHANGE TO HIDE SIGN UP OPTIONS IF EXPIRES
 		errors, // ERRORS ON SUBMIT
 		signUpLinkData, // URL AND ALIAS FOR SET COOKIES FOR CREATE THE LINK IF USER IS SIGNING UP
 		showSignUpOptions, // SHOW OR NOT THE DROPRIGHT MENU WITH THE SIGN UP OPTIONS

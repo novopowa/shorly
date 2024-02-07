@@ -27,7 +27,7 @@ function AnonymousHomeButtons({
 				</Button>
 			</div>
 			<div
-				className={`absolute ${showSignUpOptions ? 'block -right-52' : 'hidden right-0'} -bottom-0  -translate-y-1/2 bgcolor-white rounded-r-lg p-4 animate-fade-right animate-duration-200`}>
+				className={`absolute ${showSignUpOptions ? 'block -right-0 -bottom-28 md:-right-52 md:-bottom-0' : 'hidden right-0'} left-0 md:left-auto -bottom-0  -translate-y-1/2 bgcolor-white rounded-b-lg md:rounded-r-lg p-4 animate-fade-down md:animate-fade-right animate-duration-200`}>
 				<SigninOptions signUpLinkData={signUpLinkData} />
 			</div>
 		</>

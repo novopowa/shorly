@@ -37,6 +37,7 @@ function LinkForm({
 	const {
 		formAction, // FORM ACTION
 		handleSubmit, // SUBMIT EVENT FOR LOADINGS
+		handleCaptcha, // CONTROL CAPTCHA CHANGE TO HIDE SIGN UP OPTIONS IF EXPIRES
 		errors, // ERRORS ON SUBMIT
 		signUpLinkData, // URL AND ALIAS FOR SET COOKIES FOR CREATE THE LINK IF USER IS SIGNING UP
 		showSignUpOptions, // SHOW OR NOT THE DROPRIGHT MENU WITH THE SIGN UP OPTIONS
@@ -136,6 +137,7 @@ function LinkForm({
 						sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''}
 						onChange={(e: string | null) => {
 							validateCaptcha(e).then(valid => {
+								handleCaptcha(valid)
 								setValidCaptcha(valid)
 							})
 						}}
