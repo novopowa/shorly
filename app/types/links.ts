@@ -8,4 +8,3 @@ export interface LINK extends LinkEntity {
 	statistics?: statisticsEntity[]
 }
 export type USER = usersEntity
-export type STATISTIC = statisticsEntity

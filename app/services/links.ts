@@ -3,7 +3,7 @@
 import { cookies, headers } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { type Database } from '../types/database'
-import { type STATISTIC, type LINK } from '../types/links'
+import { type LINK } from '../types/links'
 import { notFound } from 'next/navigation'
 import { validateInsert, validateUpdate, validateDelete } from '../utils/validations'
 import { getSession } from '../utils/session'

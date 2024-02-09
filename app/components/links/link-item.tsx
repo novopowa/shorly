@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { type LINK, type STATISTIC } from '../../types/links'
+import { type LINK } from '../../types/links'
 import Button from '../ui/button'
 import { IconEdit, IconCopy, IconTrash, IconArrowBigLeft } from '@tabler/icons-react'
 import { Roboto_Mono } from 'next/font/google'
