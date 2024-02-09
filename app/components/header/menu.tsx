@@ -123,7 +123,7 @@ function Menu({ session }: { session: Session | null }) {
 								href={item.href}
 								action={item.action}
 								target={item.target}
-								className='w-full md:w-auto inline-flex items-center px-4 py-2 text-sm font-medium border border-color-gray  focus:z-10 bg-[rgb(var(--white))] color-black hover:bg-[rgba(var(--white),0.85)]'>
+								className='w-full md:w-auto inline-flex items-center px-3 py-2 text-sm font-medium border border-color-gray  focus:z-10 bg-[rgb(var(--white))] color-black hover:bg-[rgba(var(--white),0.85)]'>
 								{item.icon} {item.name}
 							</ButtonLink>
 						</li>
