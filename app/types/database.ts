@@ -15,7 +15,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
-          ip: string
+          ip: string | null
           url: string
           user_id: string | null
         }
@@ -24,7 +24,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
-          ip: string
+          ip?: string | null
           url: string
           user_id?: string | null
         }
@@ -33,7 +33,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
-          ip?: string
+          ip?: string | null
           url?: string
           user_id?: string | null
         }
