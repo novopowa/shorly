@@ -19,7 +19,7 @@ export async function GET(
 		return data[0] as unknown as LINK
 	}
 
-	const updateVisits = async (linkId: string): Promise<void> => {
+	/* const updateVisits = async (linkId: string): Promise<void> => {
 		'use server'
 		const supabase = createServerComponentClient<Database>({ cookies })
 		const { error, data } = await supabase
@@ -40,7 +40,7 @@ export async function GET(
 				notFound()
 			}
 		}
-	}
+	} */
 
 	const alias = context.params.alias
 	const link: LINK = await getLinkByAlias(alias)
