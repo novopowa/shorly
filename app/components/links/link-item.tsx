@@ -6,6 +6,8 @@ import { Roboto_Mono } from 'next/font/google'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Countdown from 'react-countdown-simple'
+import { useEffect, useState } from 'react'
+import { getLinkVisits } from '@/app/services/links'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
@@ -23,6 +25,17 @@ export default function LinkItem({
 	handleAnonymousSubmitEnded?: () => void
 }) {
 	const linkUrl = `https://shorly.pw/${link.alias}`
+
+	// VISITS
+	const [visits, setVisits] = useState<string | null>(null)
+
+	useEffect(() => {
+		const getStatistics = async () => {
+			const supabaseVisits = await getLinkVisits(link.id)
+			setVisits(supabaseVisits)
+		}
+		modalMode !== undefined && getStatistics()
+	}, [])
 
 	// COUNTDOWN
 	const oneDay = new Date(new Date().setHours(new Date().getHours() + 24)).toISOString()
@@ -87,7 +100,7 @@ export default function LinkItem({
 						)}
 					</div>
 					<div className='flex gap-2 items-end'>
-						<div className='w-24'>
+						<div className='w-1/3 -mb-2'>
 							<Button
 								withColor='color-error'
 								onclick={() => {
@@ -97,6 +110,9 @@ export default function LinkItem({
 								}}>
 								<IconTrash /> Delete
 							</Button>
+						</div>
+						<div className='w-1/3 text-center text-sm'>
+							Visits: <span className='font-bold'>{visits}</span>
 						</div>
 						<div className='w-20 ml-auto'>
 							<Button

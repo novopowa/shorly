@@ -31,7 +31,7 @@ export async function GET(
 			notFound()
 		} else {
 			const id: string | null = data === null || data.length === 0 ? null : data[0].id
-			const visits: string = data === null || data.length === 0 ? '0' : data[0].value
+			const visits: string = data === null || data.length === 0 ? '1' : data[0].value
 			if (id === null) {
 				const { error } = await supabase
 					.from('statistics')

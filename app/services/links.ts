@@ -3,7 +3,7 @@
 import { cookies, headers } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { type Database } from '../types/database'
-import { type LINK } from '../types/links'
+import { type STATISTIC, type LINK } from '../types/links'
 import { notFound } from 'next/navigation'
 import { validateInsert, validateUpdate, validateDelete } from '../utils/validations'
 import { getSession } from '../utils/session'
@@ -108,4 +108,13 @@ export const deleteLink = async (state: string[] | null, formData: FormData): Pr
 		}
 	}
 	return errors
+}
+
+export const getLinkVisits = async (linkId: string): Promise<string> => {
+	const { error, data } = await supabase.from('statistics').select('value').eq('link_id', linkId).eq('key', 'visits')
+	if (error !== null) {
+		notFound()
+	}
+	const result = data[0] as STATISTIC
+	return result.value
 }
