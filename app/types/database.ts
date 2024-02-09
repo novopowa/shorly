@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       links: {
@@ -15,7 +15,7 @@ export interface Database {
           created_at: string
           description: string | null
           id: string
-          ip: string | null
+          ip: string
           url: string
           user_id: string | null
         }
@@ -24,7 +24,7 @@ export interface Database {
           created_at?: string
           description?: string | null
           id?: string
-          ip?: string | null
+          ip: string
           url: string
           user_id?: string | null
         }
@@ -33,7 +33,7 @@ export interface Database {
           created_at?: string
           description?: string | null
           id?: string
-          ip?: string | null
+          ip?: string
           url?: string
           user_id?: string | null
         }
@@ -43,6 +43,38 @@ export interface Database {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      statistics: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          link_id: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key?: string
+          link_id: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          link_id?: string
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "statistics_link_id_fkey"
+            columns: ["link_id"]
+            isOneToOne: false
+            referencedRelation: "links"
             referencedColumns: ["id"]
           }
         ]

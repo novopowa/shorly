@@ -3,7 +3,7 @@ import { type LINK } from '@/app/types/links'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 
 export async function GET(
 	request: NextRequest,
@@ -19,7 +19,7 @@ export async function GET(
 		return data[0] as unknown as LINK
 	}
 
-	/* const updateVisits = async (linkId: string): Promise<void> => {
+	const updateVisits = async (linkId: string): Promise<void> => {
 		'use server'
 		const supabase = createServerComponentClient<Database>({ cookies })
 		const { error, data } = await supabase
@@ -30,20 +30,30 @@ export async function GET(
 		if (error !== null) {
 			notFound()
 		} else {
-			const id: string = data === null ? '' : data[0].id
-			const visits: string = data === null ? '0' : data[0].value
-			const newVisits: number = parseInt(visits) + 1
-			const { error } = await supabase
-				.from('statistics')
-				.upsert({ id, key: 'visits', value: newVisits.toString(), link_id: linkId })
-			if (error !== null) {
-				notFound()
+			const id: string | null = data === null || data.length === 0 ? null : data[0].id
+			const visits: string = data === null || data.length === 0 ? '0' : data[0].value
+			if (id === null) {
+				const { error } = await supabase
+					.from('statistics')
+					.insert({ key: 'visits', value: visits.toString(), link_id: linkId })
+				if (error !== null) {
+					notFound()
+				}
+			} else {
+				const newVisits: number = parseInt(visits) + 1
+				const { error } = await supabase
+					.from('statistics')
+					.update({ value: newVisits.toString() })
+					.eq('id', id)
+					.eq('key', 'visits')
+				if (error !== null) {
+					notFound()
+				}
 			}
 		}
-	} */
-
+	}
 	const alias = context.params.alias
 	const link: LINK = await getLinkByAlias(alias)
-	// await updateVisits(link.id)
+	await updateVisits(link.id)
 	return NextResponse.redirect(link.url)
 }
