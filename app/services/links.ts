@@ -39,13 +39,13 @@ export const validateMaxIps = async (ip: string | null): Promise<boolean> => {
 export const getLinksByUserId = async (userId: string): Promise<LINK[]> => {
 	const { data, error } = await supabase
 		.from('links')
-		.select('*')
+		.select('*, statistics(key, value)')
 		.eq('user_id', userId)
 		.order('created_at', { ascending: false })
 	if (error !== null) {
 		notFound()
 	}
-	return data as LINK[]
+	return data as unknown as LINK[]
 }
 
 export const insertLink = async (
@@ -108,13 +108,4 @@ export const deleteLink = async (state: string[] | null, formData: FormData): Pr
 		}
 	}
 	return errors
-}
-
-export const getLinkVisits = async (linkId: string): Promise<string> => {
-	const { error, data } = await supabase.from('statistics').select('value').eq('link_id', linkId).eq('key', 'visits')
-	if (error !== null) {
-		notFound()
-	}
-	const result = data[0] as STATISTIC
-	return result.value
 }

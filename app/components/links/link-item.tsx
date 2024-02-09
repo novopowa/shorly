@@ -1,13 +1,11 @@
 import Link from 'next/link'
-import { type LINK } from '../../types/links'
+import { type LINK, type STATISTIC } from '../../types/links'
 import Button from '../ui/button'
 import { IconEdit, IconCopy, IconTrash, IconArrowBigLeft } from '@tabler/icons-react'
 import { Roboto_Mono } from 'next/font/google'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Countdown from 'react-countdown-simple'
-import { useEffect, useState } from 'react'
-import { getLinkVisits } from '@/app/services/links'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700' })
 
@@ -25,17 +23,6 @@ export default function LinkItem({
 	handleAnonymousSubmitEnded?: () => void
 }) {
 	const linkUrl = `https://shorly.pw/${link.alias}`
-
-	// VISITS
-	const [visits, setVisits] = useState<string | null>(null)
-
-	useEffect(() => {
-		const getStatistics = async () => {
-			const supabaseVisits = await getLinkVisits(link.id)
-			setVisits(supabaseVisits)
-		}
-		modalMode !== undefined && getStatistics()
-	}, [])
 
 	// COUNTDOWN
 	const oneDay = new Date(new Date().setHours(new Date().getHours() + 24)).toISOString()
@@ -111,9 +98,14 @@ export default function LinkItem({
 								<IconTrash /> Delete
 							</Button>
 						</div>
-						<div className='w-1/3 text-center text-sm'>
-							Visits: <span className='font-bold'>{visits}</span>
-						</div>
+						{link.statistics !== undefined && (
+							<div className='w-1/3 text-center text-sm'>
+								Visits:{' '}
+								<span className='font-bold'>
+									{link.statistics.map(statistic => (statistic.key === 'visits' ? statistic.value : ''))}
+								</span>
+							</div>
+						)}
 						<div className='w-20 ml-auto'>
 							<Button
 								onclick={() => {
