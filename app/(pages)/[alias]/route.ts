@@ -9,10 +9,9 @@ export async function GET(
 	request: NextRequest,
 	context: { params: { alias: string } }
 ): Promise<NextResponse<unknown>> {
-	const supabase = createServerComponentClient<Database>({ cookies })
-
 	const getLinkByAlias = async (alias: string): Promise<LINK> => {
 		'use server'
+		const supabase = createServerComponentClient<Database>({ cookies })
 		const { error, data } = await supabase.from('links').select('*').eq('alias', alias)
 		if (error !== null) {
 			notFound()
@@ -22,6 +21,7 @@ export async function GET(
 
 	const updateVisits = async (linkId: string): Promise<void> => {
 		'use server'
+		const supabase = createServerComponentClient<Database>({ cookies })
 		const { error, data } = await supabase
 			.from('statistics')
 			.select('id, value')
