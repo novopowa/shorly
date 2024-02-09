@@ -54,6 +54,8 @@ export async function GET(
 	}
 	const alias = context.params.alias
 	const link: LINK = await getLinkByAlias(alias)
-	await updateVisits(link.id)
+	if (link.user_id !== null) {
+		await updateVisits(link.id)
+	}
 	return NextResponse.redirect(link.url)
 }
