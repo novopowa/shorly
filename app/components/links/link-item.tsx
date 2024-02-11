@@ -98,12 +98,9 @@ export default function LinkItem({
 								<IconTrash /> Delete
 							</Button>
 						</div>
-						{link.statistics !== undefined && link.statistics !== null && (
+						{link.statistics !== undefined && (
 							<div className='w-1/3 text-center text-sm'>
-								Visits:{' '}
-								<span className='font-bold'>
-									{link.statistics.map(statistic => (statistic.key === 'visits' ? statistic.value : ''))}
-								</span>
+								Visits: <span className='font-bold'>{link.statistics === null ? '0' : link.statistics.value}</span>
 							</div>
 						)}
 						<div className='w-20 ml-auto'>

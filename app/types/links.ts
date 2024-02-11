@@ -5,6 +5,6 @@ type usersEntity = Database['public']['Tables']['users']['Row']
 type statisticsEntity = Database['public']['Tables']['statistics']['Row']
 
 export interface LINK extends LinkEntity {
-	statistics?: statisticsEntity[]
+	statistics?: statisticsEntity
 }
 export type USER = usersEntity
