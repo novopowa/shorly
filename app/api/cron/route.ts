@@ -3,6 +3,8 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { type NextRequest } from 'next/server'
 
+export const revalidate = 0
+
 export function GET(request: NextRequest): Response {
 	const authHeader = request.headers.get('authorization')
 	if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
