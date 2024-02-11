@@ -98,7 +98,7 @@ export default function LinkItem({
 								<IconTrash /> Delete
 							</Button>
 						</div>
-						{link.statistics !== undefined && (
+						{link.statistics !== undefined && link.statistics !== null && (
 							<div className='w-1/3 text-center text-sm'>
 								Visits:{' '}
 								<span className='font-bold'>
