@@ -14,7 +14,6 @@ export function GET(request: NextRequest): Response {
 	}
 
 	const deleteAllAnonymousLinks = async (): Promise<void> => {
-		'use server'
 		const supabase = createServerComponentClient<Database>({ cookies })
 		const oneDayAgoDate = new Date()
 		oneDayAgoDate.setDate(new Date().getDate() - 1)
