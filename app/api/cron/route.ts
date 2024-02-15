@@ -6,8 +6,9 @@ import { type NextRequest } from 'next/server'
 export const revalidate = 0
 
 export function GET(request: NextRequest): Response {
-	const authHeader = request.headers.get('authorization')
-	if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+	const paramSecretCode = request.nextUrl.searchParams.get('code')
+
+	if (paramSecretCode === null || paramSecretCode !== process.env.CRON_SECRET) {
 		return new Response('Unauthorized', {
 			status: 401
 		})
