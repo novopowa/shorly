@@ -24,7 +24,7 @@ export async function GET(request: NextRequest): Promise<Response> {
 			.lt('created_at', `${oneDayAgoDate.toISOString().replace('T', ' ')}+00`)
 			.is('user_id', null)
 		if (error !== null) {
-			throw new Error('Database error when delete old links')
+			throw new Error(error as unknown as string)
 		}
 	}
 	await deleteAllAnonymousLinks()
