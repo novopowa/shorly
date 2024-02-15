@@ -5,7 +5,7 @@ import { type NextRequest } from 'next/server'
 
 export const revalidate = 0
 
-export function GET(request: NextRequest): Response {
+export async function GET(request: NextRequest): Promise<Response> {
 	const paramSecretCode = request.nextUrl.searchParams.get('code')
 
 	if (paramSecretCode === null || paramSecretCode !== process.env.CRON_SECRET) {
@@ -27,6 +27,6 @@ export function GET(request: NextRequest): Response {
 			throw new Error('Database error when delete old links')
 		}
 	}
-	deleteAllAnonymousLinks()
+	await deleteAllAnonymousLinks()
 	return Response.json({})
 }
